@@ -18,7 +18,7 @@ export function createAmmoCube(rotation={x: 0, y: 0, z: 0}, position= {x: 0, y: 
 	// AMMO:
 	let shape = new Ammo.btBoxShape(new Ammo.btVector3(sideLength/2, sideLength/2, sideLength/2));
 	shape.setMargin( 0.05 );
-	let rigidBody = createAmmoRigidBody(shape, mesh, 0.7, 0.0, position, mass);
+	let rigidBody = createAmmoRigidBody(shape, mesh, 0.7, 1, position, mass);
 
 	mesh.userData.physicsBody = rigidBody;
 

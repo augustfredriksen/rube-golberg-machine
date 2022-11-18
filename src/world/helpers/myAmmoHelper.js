@@ -106,7 +106,7 @@ function checkCollisions(deltaTime) {
 					if (distance <= 0) {
 						// Vi har en kollisjon og er
 						// kun interessert i kollisjon mellom kulene:
-						if ((threeMesh0.name === 'sphere' && threeMesh1.name === 'sphere') ||
+						if ((threeMesh0.name === 'domino' && threeMesh1.name === 'domino') ||
 							threeMesh1.name === 'sphere' && threeMesh0.name === 'sphere') {
 							// Debuginfo:
 							let velocity0 = rbObject0.getLinearVelocity();

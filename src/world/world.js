@@ -1,13 +1,15 @@
 import "../style.css";
 import * as THREE from "three";
+import { Vector3 } from "three";
 
-import { createThreeScene, handleKeys, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
+import { createThreeScene, getRigidBodyFromMesh, handleKeys, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
 
 import { createAmmoWorld, updatePhysics } from "./helpers/myAmmoHelper.js";
-import { createAmmoXZPlane } from "./components/plane";
-import { createAmmoGolfBall } from "./components/domino";
+import { createAmmoXZPlane, createWalls } from "./components/plane";
+import { createAmmoGolfBall } from "./components/golf_ball";
 import { createAmmoCube } from "./components/cube";
-import { createAmmoGolfClub, createHingedArm } from "./components/golf_club";
+import { createAmmoGolfClub, createHingedArm, secondFunction } from "./components/golf_club";
+import { createAmmoDomino } from "./components/domino";
 
 //Globale variabler:
 let g_clock;
@@ -48,16 +50,28 @@ function handleKeyDown(event) {
 
 function addAmmoSceneObjects() {
     createAmmoXZPlane();
+	createWalls(1, 1, 1);
     createAmmoGolfBall();
-    createHingedArm();
+    secondFunction();
     createAmmoCube();
+	for(let i = 0; i < 25; i++) {
+		createAmmoDomino(
+			{x: 0, y: 0, z: 0},
+			{x: -2, y: 0, z: -12 -i});
+	}
+	for(let i = 25; i >= 0; i--) {
+		createAmmoDomino(
+			{x: 0, y: -Math.PI/8 - i*0.1, z: 0},
+			{x: -2 + (i + 1 * Math.cos(2*Math.PI * i / 10))*0.2, y: 0, z: -37 -(i + 1 * Math.sin(2 * Math.PI * i / 10))*0.8});
+	}
+	
 }
-
 function animate(currentTime, myThreeScene, myAmmoPhysicsWorld) {
 	window.requestAnimationFrame((currentTime) => {
 		animate(currentTime, myThreeScene, myAmmoPhysicsWorld);
 	});
 	let deltaTime = g_clock.getDelta();
+
 
 	//Oppdaterer grafikken:
 	updateThree(deltaTime);

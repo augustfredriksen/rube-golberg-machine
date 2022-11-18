@@ -6,8 +6,9 @@ https://source.coderefinery.org/3d/threejs_std/-/blob/main/src/del4/ammoShapes2/
 import * as THREE from "three";
 import GUI from "lil-gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { Vector3 } from "three";
 
-let g_scene, g_renderer, g_camera, g_controls, g_lilGui;
+export let g_scene, g_renderer, g_camera, g_controls, g_lilGui, g_store;
 
 export function createThreeScene() {
 	const canvas = document.createElement("canvas");
@@ -36,7 +37,13 @@ export function createThreeScene() {
 	g_camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 	g_camera.position.x = 6;
 	g_camera.position.y = 7;
-	g_camera.position.z = 10;
+	g_camera.position.z = 4;
+	setTimeout(() => {
+		g_camera.position.x = 10;
+		g_camera.position.y = 15;
+		g_camera.position.z = 20;
+	}, 2000);
+
 
 	// TrackballControls:
 	g_controls = new OrbitControls(g_camera, g_renderer.domElement);
@@ -85,7 +92,9 @@ export function addLights() {
 }
 
 //Sjekker tastaturet:
-export function handleKeys(delta, g_currentlyPressedKeys) {}
+export function handleKeys(delta, g_currentlyPressedKeys) {
+
+}
 
 export function onWindowResize() {
 	g_camera.aspect = window.innerWidth / window.innerHeight;
@@ -104,11 +113,15 @@ export function addMeshToScene(mesh) {
 	g_scene.add(mesh);
 }
 
+export function getMeshName(name) {
+	g_scene.getObjectByName(name);
+}
+
 export function renderScene() {
 	g_renderer.render(g_scene, g_camera);
 }
 
-export function getRigidBodyFromMesh(meshName) {
+export async function getRigidBodyFromMesh(meshName) {
 	const mesh = g_scene.getObjectByName(meshName);
 	if (mesh) return mesh.userData.physicsBody;
 	else return null;
