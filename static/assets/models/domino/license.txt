@@ -1,0 +1,11 @@
+Model Information:
+* title:	Chess Piece King
+* source:	https://sketchfab.com/3d-models/chess-piece-king-6cfbb5175042404381393d564d74dfc3
+* author:	syeds shoaib (https://sketchfab.com/syeds)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Chess Piece King" (https://sketchfab.com/3d-models/chess-piece-king-6cfbb5175042404381393d564d74dfc3) by syeds shoaib (https://sketchfab.com/syeds) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
