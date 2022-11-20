@@ -2,14 +2,18 @@ import "../style.css";
 import * as THREE from "three";
 import { Vector3 } from "three";
 
-import { createThreeScene, getRigidBodyFromMesh, handleKeys, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
+import { addLineBetweenObjects, createThreeScene, getRigidBodyFromMesh, handleKeys, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
 
 import { createAmmoWorld, updatePhysics } from "./helpers/myAmmoHelper.js";
-import { createAmmoXZPlane, createWalls } from "./components/plane";
+import { createAmmoXZPlane} from "./components/plane";
+import { createGolfCourse} from "./components/golfCourse1"
 import { createAmmoGolfBall } from "./components/golf_ball";
 import { createAmmoCube } from "./components/cube";
 import { createAmmoGolfClub, createHingedArm, secondFunction } from "./components/golf_club";
-import { createAmmoDomino } from "./components/domino";
+import { createAmmoDomino, createMultipleDominos, createOppositeTriangleDominos, createRotatedDomino, createTriangleDominos } from "./components/domino";
+import { createAmmoGolfCart } from "./components/golf_cart";
+import { createGolfCourse2 } from "./components/golfCourse2";
+import { create6DofSphere, createHingedSphere, createSwingTriangleMesh } from "./components/swing";
 
 //Globale variabler:
 let g_clock;
@@ -48,22 +52,24 @@ function handleKeyDown(event) {
 	g_currentlyPressedKeys[event.code] = true;
 }
 
-function addAmmoSceneObjects() {
+async function addAmmoSceneObjects() {
     createAmmoXZPlane();
-	createWalls(1, 1, 1);
+	createGolfCourse();
+    createGolfCourse2();
     createAmmoGolfBall();
     secondFunction();
-    createAmmoCube();
-	for(let i = 0; i < 25; i++) {
-		createAmmoDomino(
-			{x: 0, y: 0, z: 0},
-			{x: -2, y: 0, z: -12 -i});
-	}
-	for(let i = 25; i >= 0; i--) {
-		createAmmoDomino(
-			{x: 0, y: -Math.PI/8 - i*0.1, z: 0},
-			{x: -2 + (i + 1 * Math.cos(2*Math.PI * i / 10))*0.2, y: 0, z: -37 -(i + 1 * Math.sin(2 * Math.PI * i / 10))*0.8});
-	}
+    await createHingedSphere();
+    await createSwingTriangleMesh();
+    //createAmmoCube();
+    createMultipleDominos(14);
+    createMultipleDominos(12, {x: 1.25, y: 7.5, z: -30})
+    createMultipleDominos(12, {x: -1.25, y: 7.5, z: -30})
+    //createRotatedDomino(60, 360, 0, -10);
+    createTriangleDominos(3, {x: 0, y: 7.5, z: -32.5})
+    createOppositeTriangleDominos(3, {x: 0, y: 7.5, z: -23})
+    createMultipleDominos(12, {x: 0, y: 7.5, z: -23})
+
+    //createAmmoGolfCart();
 	
 }
 function animate(currentTime, myThreeScene, myAmmoPhysicsWorld) {

@@ -126,3 +126,26 @@ export async function getRigidBodyFromMesh(meshName) {
 	if (mesh) return mesh.userData.physicsBody;
 	else return null;
 }
+
+export function addLineBetweenObjects(nameMeshStart, nameMeshEnd) {
+	let lineMeshStartPosition = g_scene.getObjectByName(nameMeshStart, true);
+	let lineMeshEndPosition = g_scene.getObjectByName(nameMeshEnd, true);
+
+	// Wire / Line:
+	// Definerer Line-meshet (beståemde av to punkter):
+	const lineMaterial = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+	const points = [];
+	// Finner start- og endepunktmesh:
+	const startPoint = new THREE.Vector3();
+	const endPoint = new THREE.Vector3();
+	// NB! Bruker world-position:
+	lineMeshStartPosition.getWorldPosition(startPoint);
+	lineMeshEndPosition.getWorldPosition(endPoint);
+	points.push(startPoint);
+	points.push(endPoint);
+	const lineGeometry = new THREE.BufferGeometry().setFromPoints( points );
+	const springLineMesh = new THREE.Line( lineGeometry, lineMaterial );
+	springLineMesh.name = "springLineMesh";
+	// NB! Linemeshet legges til scene-objektet.
+	addMeshToScene(springLineMesh);
+}

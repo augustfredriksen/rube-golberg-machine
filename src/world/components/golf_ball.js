@@ -6,8 +6,8 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
 import { Vector3 } from "three";
 
 
-export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0, y: 3, z: 0}) {
-	const mass=1;
+export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0, y: 2, z: 0}) {
+	const mass=5;
     let golfBall;
 	// THREE:
     const loader = new GLTFLoader();
@@ -16,7 +16,7 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
     loader.setDRACOLoader(dracoLoader);
     loader.load('assets/models/golf_ball/golf_ball.glb', (gltf) => {
         golfBall =  gltf.scene.children[0].children[0].children[0].children[0];
-        golfBall.scale.set(.5, .5, .5);
+        golfBall.scale.set(.3, .3, .3);
         golfBall.position.set(position.x, position.y, position.z);
         golfBall.rotation.set(rotation.x, rotation.y, rotation.z);
         golfBall.receiveShadow = true;
@@ -75,7 +75,7 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
 
         let shape = new Ammo.btSphereShape(golfBall.geometry.boundingSphere.radius/1.74);
         shape.setMargin( 0.05 );
-        let rigidBody = createAmmoRigidBody(shape, golfBall, 0, 0.9, position, mass);
+        let rigidBody = createAmmoRigidBody(shape, golfBall, .2, 0.5, position, mass);
     
         golfBall.userData.physicsBody = rigidBody;
     

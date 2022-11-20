@@ -1,18 +1,23 @@
 import * as THREE from "three";
 import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
+import { colorScheme } from "../../../static/colorScheme.js";
+import { createAmmoHollowCylinder } from "./hollowCylinder.js";
+import { createAmmoRamp } from "./ramp.js";
+import { createAmmoCone } from "./cone.js";
 
 export function createAmmoXZPlane(
 	rotation={x: 0, y: 0, z: 0},
 	position= {x: 0, y: 0, z: -22},
-	width = 50,
-	length = 10,
-	depth = 2
+	width = 150,
+	length = 150,
+	depth = 2,
+    color = 0xA8A8F8,
 	 ) {
 	const mass=0;
 	// THREE:
 	let geometry = new THREE.BoxGeometry( length, depth, width, 1, 1 );
-	let material = new THREE.MeshStandardMaterial( { color: 0xA8A8F8, side: THREE.DoubleSide } );
+	let material = new THREE.MeshStandardMaterial( { color: color, side: THREE.DoubleSide } );
 	let mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
@@ -36,17 +41,4 @@ export function createAmmoXZPlane(
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
-}
-
-export function createWalls() {
-	createAmmoXZPlane(
-		{x: 0, y: 0, z: Math.PI/2},
-		{x: 5, y: 1, z: -22},
-		50, 2, 1
-		);
-	createAmmoXZPlane(
-		{x: 0, y: 0, z: Math.PI/2},
-		{x: -5, y: 1, z: -22},
-		50, 2, 1
-		);
 }

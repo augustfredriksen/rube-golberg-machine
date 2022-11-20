@@ -30,15 +30,15 @@ export const secondFunction = async () => {
 	const upperLimit = Math.PI;
 	const softness = 0.2;
 	const biasFactor = 0.9;
-	const relaxationFactor = 0.0;
+	const relaxationFactor = 0.1;
 	hingeConstraint.setLimit( lowerLimit, upperLimit, softness, biasFactor, relaxationFactor);
-	hingeConstraint.enableAngularMotor(true, 0.9, 0.9);
+	hingeConstraint.enableAngularMotor(true, 0.1, 0.1);
 	g_ammoPhysicsWorld.addConstraint( hingeConstraint, true );
     return theTest;
 }
 
-export async function createAmmoGolfClub(rotation={x: Math.PI/2, y:0, z: 0}, position= {x: -3, y: 6, z: 0}) {
-	const mass=5;
+export async function createAmmoGolfClub(rotation={x: Math.PI/2, y:0, z: 0}, position= {x: 0, y: 16, z: 0}) {
+	let mass=100;
     let mesh2;
     let domino;
 	// THREE:
@@ -114,14 +114,14 @@ export async function createAmmoGolfClub(rotation={x: Math.PI/2, y:0, z: 0}, pos
     
 }
 
-function createAnchor(position={x: 0, y: 11.3, z:4}) {
+function createAnchor(position={x: .1806, y: 11.8, z:-1}) {
 	const radius = .2;;
 	const mass = 0;
 
 	//THREE
 	const mesh = new THREE.Mesh(
 		new THREE.SphereGeometry(radius, 32, 32),
-		new THREE.MeshStandardMaterial({color: 0xb846db, transparent: true, opacity: 0.0}));
+		new THREE.MeshStandardMaterial({color: 0xb846db, transparent: true, opacity: 0.5}));
 	mesh.name = 'hinge_anchor';
 	mesh.position.set(position.x, position.y, position.z);
 	mesh.castShadow = true;
