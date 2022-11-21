@@ -23,6 +23,7 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
         golfBall.castShadow = true;
         golfBall.name = "golfball";
 
+
 /*         let triangle_mesh = new Ammo.btTriangleMesh();
         let vecA = new Ammo.btVector3(0, 0, 0);
         let vecB = new Ammo.btVector3(0, 0, 0);
@@ -83,6 +84,10 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
         g_ammoPhysicsWorld.addRigidBody(
             rigidBody,
             1,1 );
+
+            golfBall.collisionResponse = (mesh1) => {
+                //rigidBody.setGravity(new Ammo.btVector3(0, -1.80665, 0))
+            };
     
         addMeshToScene(golfBall);
         g_rigidBodies.push(golfBall);

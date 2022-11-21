@@ -108,34 +108,29 @@ function checkCollisions(deltaTime) {
 						// kun interessert i kollisjon mellom kulene:
 						if ((threeMesh0.name === 'domino' && threeMesh1.name === 'domino') ||
 							threeMesh1.name === 'domino' && threeMesh0.name === 'domino') {
-							// Debuginfo:
-							let velocity0 = rbObject0.getLinearVelocity();
-							let velocity1 = rbObject1.getLinearVelocity();
-							let worldPos0 = contactPoint.get_m_positionWorldOnA();
-							let worldPos1 = contactPoint.get_m_positionWorldOnB();
-							let localPos0 = contactPoint.get_m_localPointA();
-							let localPos1 = contactPoint.get_m_localPointB();
 
 							if (typeof threeMesh0.collisionResponse === 'function')
 								threeMesh0.collisionResponse(threeMesh0);
 							if (typeof threeMesh1.collisionResponse === 'function')
 								threeMesh1.collisionResponse(threeMesh1);
 						}
-						if ((threeMesh0.name === 'cone' && threeMesh1.name === 'domino') ||
-							threeMesh1.name === 'domino' && threeMesh0.name === 'cone') {
-							// Debuginfo:
-							let velocity0 = rbObject0.getLinearVelocity();
-							let velocity1 = rbObject1.getLinearVelocity();
-							let worldPos0 = contactPoint.get_m_positionWorldOnA();
-							let worldPos1 = contactPoint.get_m_positionWorldOnB();
-							let localPos0 = contactPoint.get_m_localPointA();
-							let localPos1 = contactPoint.get_m_localPointB();
+						if ((threeMesh0.name === 'golfclub' && threeMesh1.name === 'golfball') ||
+							threeMesh1.name === 'golfball' && threeMesh0.name === 'golfclub') {
 
 							if (typeof threeMesh0.collisionResponse === 'function')
 								threeMesh0.collisionResponse(threeMesh0);
 							if (typeof threeMesh1.collisionResponse === 'function')
 								threeMesh1.collisionResponse(threeMesh1);
 						}
+
+						if ((threeMesh0.name === 'hinge_sphere' && threeMesh1.name === 'golf_cart') ||
+						threeMesh1.name === 'golf_cart' && threeMesh0.name === 'hinge_sphere') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+					}
 					}
 				}
 			}

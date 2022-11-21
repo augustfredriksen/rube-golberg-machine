@@ -6,8 +6,8 @@ import { colorScheme } from "../../../static/colorScheme.js";
 
 export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0, y: 0, z: 0}) {
 	const mass=2;
-    const width = 0.8;
-    const height = 1.5;
+    const width = 0.5;
+    const height = 1;
     const depth = 0.15;
 	// THREE:
 	let geometry = new THREE.BoxGeometry( width, height, depth, 1, 1 );
@@ -16,7 +16,7 @@ export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0,
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
     mesh.position.set(position.x, position.y, position.z);
     mesh.collisionResponse = (mesh1) => {
-        //mesh.scale.set(2, 2, 2);
+        rigidBody.setGravity(new Ammo.btVector3(0, -18, 0))
 	};
 
 	mesh.receiveShadow = true;

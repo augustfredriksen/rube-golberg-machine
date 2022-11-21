@@ -56,6 +56,7 @@ export async function createAmmoGolfClub(rotation={x: Math.PI/2, y:0, z: 0}, pos
             mesh2.rotation.set(rotation.x, rotation.y, rotation.z);
             mesh2.receiveShadow = true;
             mesh2.castShadow = true;
+
     
             let triangle_mesh = new Ammo.btTriangleMesh();
             let vecA = new Ammo.btVector3(0, 0, 0);

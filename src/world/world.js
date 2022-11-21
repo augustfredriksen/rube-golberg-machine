@@ -11,9 +11,11 @@ import { createAmmoGolfBall } from "./components/golf_ball";
 import { createAmmoCube } from "./components/cube";
 import { createAmmoGolfClub, createHingedArm, secondFunction } from "./components/golf_club";
 import { createAmmoDomino, createMultipleDominos, createOppositeTriangleDominos, createRotatedDomino, createTriangleDominos } from "./components/domino";
-import { createAmmoGolfCart } from "./components/golf_cart";
+import { createAmmoGolfCart, createGolfCartTriangleMesh } from "./components/golf_cart";
 import { createGolfCourse2 } from "./components/golfCourse2";
 import { create6DofSphere, createHingedSphere, createSwingTriangleMesh } from "./components/swing";
+import { createAmmoRamp } from "./components/ramp";
+import { createSeesaw } from "./components/seesaw";
 
 //Globale variabler:
 let g_clock;
@@ -60,16 +62,27 @@ async function addAmmoSceneObjects() {
     secondFunction();
     await createHingedSphere();
     await createSwingTriangleMesh();
+    createAmmoGolfCart();
+    createAmmoRamp(
+        0,
+        {x: -Math.PI/6, y: 0, z: 0},
+        {x: 0, y: 7, z: -37}
+    )
+    createAmmoRamp(
+        10,
+        {x: 0, y: 0, z: 0},
+        {x: 0, y: 7, z: -24.8}
+    )
+    //createSeesaw();
     //createAmmoCube();
-    createMultipleDominos(14);
+/*     createMultipleDominos(14);
     createMultipleDominos(12, {x: 1.25, y: 7.5, z: -30})
     createMultipleDominos(12, {x: -1.25, y: 7.5, z: -30})
-    //createRotatedDomino(60, 360, 0, -10);
+    createRotatedDomino(60, 360, 0, -10);
     createTriangleDominos(3, {x: 0, y: 7.5, z: -32.5})
     createOppositeTriangleDominos(3, {x: 0, y: 7.5, z: -23})
-    createMultipleDominos(12, {x: 0, y: 7.5, z: -23})
+    createMultipleDominos(12, {x: 0, y: 7.5, z: -23}) */
 
-    //createAmmoGolfCart();
 	
 }
 function animate(currentTime, myThreeScene, myAmmoPhysicsWorld) {

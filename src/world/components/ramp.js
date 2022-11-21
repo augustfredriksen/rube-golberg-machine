@@ -4,11 +4,10 @@ import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpe
 import { colorScheme } from "../../../static/colorScheme.js";
 
 
-export function createAmmoRamp(rotation={x: Math.PI/10, y: 0, z: 0}, position= {x: 0, y: 2, z: -40}) {
-    const mass=0;
-    const width = 2;
+export function createAmmoRamp(mass ,rotation={x: Math.PI/10, y: 0, z: 0}, position= {x: 0, y: 2, z: -40}) {
+    const width = 1;
     const length = 0.1;
-    const depth = 5;
+    const depth = 3;
     let geometry = new THREE.BoxGeometry(width, length, depth);
 	let material = new THREE.MeshStandardMaterial( { color: colorScheme.blue, side: THREE.DoubleSide } );
 	let mesh = new THREE.Mesh(geometry, material);
