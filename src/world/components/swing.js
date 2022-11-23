@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { addMeshToScene, g_camera, g_controls } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, g_camera, g_controls, initializeBoing, intializeDomino, intializeGolfSwing } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
@@ -33,6 +33,7 @@ export async function createHingedSphere() {
 }
 
 function createSphere(position={x: 0, y: 5, z:-40}) {
+    let isCollided = false;
 	const radius = .2;;
 	const mass = .2;
 
@@ -45,7 +46,10 @@ function createSphere(position={x: 0, y: 5, z:-40}) {
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	mesh.collisionResponse = (mesh1) => {
-		mesh1.material.color.setHex(Math.random() * 0xffffff);
+        if(!isCollided) {
+            initializeBoing();
+            isCollided = true;
+        }
 	};
 	//AMMO
 	const shape = new Ammo.btSphereShape(mesh.geometry.parameters.radius);
@@ -53,15 +57,9 @@ function createSphere(position={x: 0, y: 5, z:-40}) {
 	const rigidBody = createAmmoRigidBody(shape, mesh, 0.4, 0.6, position, mass);
 	mesh.userData.physicsBody = rigidBody;
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-		1 | 1 | 1);
+		rigidBody);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
-
-    mesh.collisionResponse = (mesh1) => {
-        //rigidBody.setGravity(new Ammo.btVector3(0, -1.80665, 0))
-    };
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
@@ -82,18 +80,14 @@ function createAnchor(position={x: 0, y: 5.2, z:-40}) {
 	mesh.position.set(position.x, position.y, position.z);
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
-	mesh.collisionResponse = (mesh1) => {
-		mesh1.material.color.setHex(Math.random() * 0xffffff);
-	};
+
 	//AMMO
 	const shape = new Ammo.btSphereShape(mesh.geometry.parameters.radius);
 	shape.setMargin( 0.05 );
 	const rigidBody = createAmmoRigidBody(shape, mesh, 0.4, 0.6, position, mass);
 	mesh.userData.physicsBody = rigidBody;
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-		1 | 1 | 1);
+		rigidBody);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
 
@@ -115,8 +109,7 @@ function createAnchor(position={x: 0, y: 5.2, z:-40}) {
         groupMesh.userData.physicsBody = rigidBody;
         // Legger til physics world:
         g_ammoPhysicsWorld.addRigidBody(
-            rigidBody,
-            1, 1 | 1 | 1);
+            rigidBody);
     
         addMeshToScene(groupMesh);
         g_rigidBodies.push(groupMesh);

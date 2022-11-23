@@ -82,9 +82,7 @@ function createArm(position={x: 12, y: 1.5, z:-25}) {
 	const rigidBody = createAmmoRigidBody(shape, mesh, 0.4, 0.6, position, mass);
 	mesh.userData.physicsBody = rigidBody;
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-		1 | 1 | 1);
+		rigidBody);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
 

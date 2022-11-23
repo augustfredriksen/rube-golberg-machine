@@ -29,8 +29,7 @@ export function createAmmoCone(rotation={x: 0, y: Math.PI/4, z:Math.PI}, positio
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,1 | 1 | 1 );
+		rigidBody);
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);

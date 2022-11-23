@@ -31,9 +31,7 @@ export function createAmmoSeesaw(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-        1 | 1 | 1);
+		rigidBody);
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
@@ -66,17 +64,15 @@ function createAmmoSeesawPlank(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-        1 | 1 | 1);
+		rigidBody);
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
 }
 
-function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4.2, y: 9.25, z: -23.5}) {
-	const mass=15;
+export function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 9.25, z: -23.5}) {
+	const mass=20;
     const radius = 0.4;
 	// THREE:
 	let geometry = new THREE.SphereGeometry( radius );
@@ -92,26 +88,20 @@ function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4.2, 
 	// AMMO:
 	let shape = new Ammo.btSphereShape(radius);
 	shape.setMargin( 0.05 );
-	let rigidBody = createAmmoRigidBody(shape, mesh, .2, 1, position, mass);
-	rigidBody.setRollingFriction(1);
+	let rigidBody = createAmmoRigidBody(shape, mesh, .2, 0.9, position, mass);
 
 	mesh.userData.physicsBody = rigidBody;
-	mesh.collisionResponse = (mesh1) => {
-		sphereCollided = true;
-		rigidBody.setGravity(new Ammo.btVector3(0, -20, 0));
-	};
 
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-        1 | 1 | 1 | 15);
+		rigidBody);
 
 	addMeshToScene(mesh);
     
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
+    return rigidBody;
 
 }
 

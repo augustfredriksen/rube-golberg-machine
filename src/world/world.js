@@ -2,7 +2,7 @@ import "../style.css";
 import * as THREE from "three";
 import { Vector3 } from "three";
 
-import { addLineBetweenObjects, createThreeScene, getRigidBodyFromMesh, handleKeys, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
+import { addLineBetweenObjects, createThreeScene, getRigidBodyFromMesh, g_audio, handleKeys, initializeBoing, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
 
 import { createAmmoWorld, updatePhysics } from "./helpers/myAmmoHelper.js";
 import { createAmmoXZPlane} from "./components/plane";
@@ -21,6 +21,8 @@ import { createAmmoSeesaw } from "./components/seesaw";
 import { createAmmoToyCar } from "./components/toy_car";
 import { createAmmoToySoldier } from "./components/toy_soldier";
 import { createAmmoRocket, createAmmoToyRocket } from "./components/toy_rocket";
+import { createTrapDoorTriangleMesh } from "./components/trapDoor";
+import { createTrapDoorCube } from "./components/trapDoorCube";
 
 //Globale variabler:
 let g_clock;
@@ -33,6 +35,8 @@ export async function main() {
 
 	// three:
 	createThreeScene();
+
+
 	// ammo
 	createAmmoWorld(true); //<<=== MERK!
 	// three/ammo-objekter:
@@ -62,20 +66,34 @@ function handleKeyDown(event) {
 async function addAmmoSceneObjects() {
     createAmmoXZPlane();
 	createGolfCourse();
-    createAmmoGolfBall();
     secondFunction();
-    await createHingedSphere();
+    createAmmoGolfBall();
     await createSwingTriangleMesh();
+    await createHingedSphere();
     createAmmoGolfCart();
     createAmmoRamp(
+        1,
+        0.1,
+        3,
         0,
         {x: -Math.PI/10, y: 0, z: 0},
         {x: 0, y: 7, z: -36}
     )
     createAmmoRamp(
+        1,
+        0.1,
+        3,
         10,
         {x: 0, y: 0, z: 0},
         {x: 0, y: 7, z: -24.8}
+    )
+    createAmmoRamp(
+        2,
+        0.1,
+        4,
+        0,
+        {x: -Math.PI/10, y: 0, z: 0},
+        {x: 10, y: 1.5, z: -18}
     )
     createAmmoSphere(
         {x: 0, y: 0, z: 0},
@@ -88,10 +106,16 @@ async function addAmmoSceneObjects() {
     createHalfCircleDominoZ(4, 40, 10, -5);
     createMultipleDominos(61, {x: 6, y: 2, z: -34.8});
     createInverseHalfCircleDominoZ(2, 20, 8, 35);
-    createMultipleDominos(22, {x: 10, y: 2, z: -34.8});
+    //createTrapDoorCube();
+
+    //g_audio.play();
     createAmmoSeesaw();
-	createAmmoRocket();
     createGolfCourse2();
+    createMultipleDominos(21, {x: 10, y: 2, z: -34.8});
+    
+    
+    await createTrapDoorTriangleMesh();
+
 
 
     /* createMultipleDominos(12, {x: 1.25, y: 7.5, z: -30})

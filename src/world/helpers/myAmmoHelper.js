@@ -130,6 +130,15 @@ function checkCollisions(deltaTime) {
 							if (typeof threeMesh1.collisionResponse === 'function')
 								threeMesh1.collisionResponse(threeMesh1);
 						}
+
+						if ((threeMesh0.name === 'trap_door_cube' && threeMesh1.name === 'domino') ||
+							threeMesh1.name === 'domino' && threeMesh0.name === 'trap_door_cube') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+						}
 						if ((threeMesh0.name === 'golf_course_2' && threeMesh1.name === 'seesawSphere') ||
 						threeMesh1.name === 'seesawSphere' && threeMesh0.name === 'golf_course_2') {
 
@@ -154,17 +163,7 @@ function checkCollisions(deltaTime) {
 								threeMesh0.collisionResponse(threeMesh0);
 							if (typeof threeMesh1.collisionResponse === 'function')
 								threeMesh1.collisionResponse(threeMesh1);
-					}
-
-					if ((threeMesh0.name === 'domino' && threeMesh1.name === 'seesawSphere') ||
-						threeMesh1.name === 'seesawSphere' && threeMesh0.name === 'domino') {
-
-							if (typeof threeMesh0.collisionResponse === 'function')
-								threeMesh0.collisionResponse(threeMesh0);
-							if (typeof threeMesh1.collisionResponse === 'function')
-								threeMesh1.collisionResponse(threeMesh1);
-					}
-					
+						}
 					}
 				}
 			}

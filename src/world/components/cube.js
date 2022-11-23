@@ -27,9 +27,7 @@ export function createAmmoCube(rotation={x: 0, y: 0, z: 0}, position= {x: 0, y: 
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-        1 | 1 | 1);
+		rigidBody);
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);

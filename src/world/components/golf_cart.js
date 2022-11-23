@@ -7,7 +7,7 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.PI/2}, position= {x: 0, y: 7.5, z: -39}) {
     const mass = 100;
-    let golfCart;
+    let golfCartMesh;
 	// THREE:
 	const loader = new GLTFLoader();
 	const dracoLoader = new DRACOLoader();
@@ -15,13 +15,13 @@ export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.
 	loader.setDRACOLoader(dracoLoader);
 	return new Promise((resolve, reject) => {
 		loader.load("assets/models/golf_cart/scene.gltf", (gltf) => {
-			golfCart = gltf.scene.children[0].children[0].children[0].children[1];
-            golfCart.name = "golf_cart";
-            golfCart.scale.set(0.01, 0.01, 0.01);
-            golfCart.position.set(position.x, position.y, position.z);
-            golfCart.rotation.set(rotation.x, rotation.y, rotation.z);
-            golfCart.receiveShadow = true;
-            golfCart.castShadow = true;
+			golfCartMesh = gltf.scene.children[0].children[0].children[0].children[1];
+            golfCartMesh.name = "golf_cart";
+            golfCartMesh.scale.set(0.01, 0.01, 0.01);
+            golfCartMesh.position.set(position.x, position.y, position.z);
+            golfCartMesh.rotation.set(rotation.x, rotation.y, rotation.z);
+            golfCartMesh.receiveShadow = true;
+            golfCartMesh.castShadow = true;
 
     
             let triangle_mesh = new Ammo.btTriangleMesh();
@@ -29,7 +29,7 @@ export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.
             let vecB = new Ammo.btVector3(0, 0, 0);
             let vecC = new Ammo.btVector3(0, 0, 0);
     
-            let verticesPos = golfCart.geometry.getAttribute('position').array;
+            let verticesPos = golfCartMesh.geometry.getAttribute('position').array;
             let triangles = [];
             for(let i = 0; i < verticesPos.length; i +=3) {
                 triangles.push({
@@ -59,27 +59,26 @@ export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.
             Ammo.destroy(vecC);
     
             const shape = new Ammo.btConvexTriangleMeshShape(triangle_mesh);
-            golfCart.geometry.verticesNeedUpdate = true;
+            golfCartMesh.geometry.verticesNeedUpdate = true;
             shape.getMargin( 0.05 );
-            let rigidBody = createAmmoRigidBody(shape, golfCart, 0.0, 0.3, position, mass);
+            let rigidBody = createAmmoRigidBody(shape, golfCartMesh, 0.0, 0.3, position, mass);
             rigidBody.setDamping(0.1, 0.5);
             rigidBody.setActivationState(4);
     
-            golfCart.userData.physicsBody = rigidBody;
+            golfCartMesh.userData.physicsBody = rigidBody;
     
             // Legger til physics world:
             g_ammoPhysicsWorld.addRigidBody(
-                rigidBody,
-                1, 1 | 1 | 1);
+                rigidBody);
 
-            golfCart.collisionResponse = (mesh1) => {
+            golfCartMesh.collisionResponse = (mesh1) => {
                     let velocityVector = new Ammo.btVector3(0, 0, 14);
                     rigidBody.setLinearVelocity(velocityVector);
             };
         
-            addMeshToScene(golfCart);
-            g_rigidBodies.push(golfCart);
-            rigidBody.threeMesh = golfCart;
+            addMeshToScene(golfCartMesh);
+            g_rigidBodies.push(golfCartMesh);
+            rigidBody.threeMesh = golfCartMesh;
             resolve(rigidBody);
 
 		});

@@ -1,10 +1,11 @@
 import * as THREE from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min'
-import { addMeshToScene } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, intializeDomino } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 
 export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0, y: 0, z: 0}) {
+    let hasCollided = false;
 	const mass=2;
     const width = 0.5;
     const height = 1.2;
@@ -29,14 +30,16 @@ export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0,
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-        1 | 1 | 1 | 15);
+		rigidBody);
 
 	addMeshToScene(mesh);
 
     mesh.collisionResponse = (mesh1) => {
-        rigidBody.setGravity(new Ammo.btVector3(0, -(9.80665*2), 0))
+        if(!hasCollided) {
+            intializeDomino();
+            rigidBody.setGravity(new Ammo.btVector3(0, -(9.80665*2), 0))
+            hasCollided = true;
+        }
     }
     
 	g_rigidBodies.push(mesh);

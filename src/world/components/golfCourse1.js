@@ -35,9 +35,7 @@ export function createAmmoCubeShapes(
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody,
-		1,
-        1 | 1 | 1);
+		rigidBody);
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);

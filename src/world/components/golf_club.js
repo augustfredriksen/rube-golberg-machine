@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { addMeshToScene, getRigidBodyFromMesh } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, getRigidBodyFromMesh, g_audio, intializeGolfSwing } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
@@ -38,6 +38,7 @@ export const secondFunction = async () => {
 }
 
 export async function createAmmoGolfClub(rotation={x: Math.PI/2, y:0, z: 0}, position= {x: 0, y: 16, z: 0}) {
+    let isCollided = false;
 	let mass=100;
     let mesh2;
     let domino;
@@ -103,8 +104,14 @@ export async function createAmmoGolfClub(rotation={x: Math.PI/2, y:0, z: 0}, pos
     
             // Legger til physics world:
             g_ammoPhysicsWorld.addRigidBody(
-                rigidBody,
-                1, 1 | 1 | 1);
+                rigidBody);
+
+                mesh2.collisionResponse = (mesh1) => {
+                    if(!isCollided) {
+                        intializeGolfSwing();
+                        isCollided = true;
+                    }
+                }
         
             addMeshToScene(mesh2);
             g_rigidBodies.push(mesh2);
@@ -128,6 +135,7 @@ function createAnchor(position={x: .1806, y: 11.8, z:-1}) {
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	mesh.collisionResponse = (mesh1) => {
+        
 		mesh1.material.color.setHex(Math.random() * 0xffffff);
 	};
 	//AMMO

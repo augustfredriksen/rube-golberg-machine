@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { addMeshToScene, g_camera, g_controls } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, g_camera, g_controls, initializeBoing, intializeDomino, intializeGolfSwing } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
@@ -7,6 +7,7 @@ import { Vector3 } from "three";
 
 
 export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0, y: 2, z: 0}) {
+    let isCollided = false;
 	const mass=5;
     let golfBall;
 	// THREE:
@@ -82,12 +83,10 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
     
         // Legger til physics world:
         g_ammoPhysicsWorld.addRigidBody(
-            rigidBody,
-            1,1 );
+            rigidBody);
 
             golfBall.collisionResponse = (mesh1) => {
 
-                //rigidBody.setGravity(new Ammo.btVector3(0, -1.80665, 0))
             };
     
         addMeshToScene(golfBall);
