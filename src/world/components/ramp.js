@@ -15,6 +15,7 @@ export function createAmmoRamp(mass ,rotation={x: Math.PI/10, y: 0, z: 0}, posit
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 
 	mesh.receiveShadow = true;
+    mesh.castShadow = true;
 	mesh.name = 'ramp';
     let height = mesh.geometry.parameters.height
 	let shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, length/2, depth/2));

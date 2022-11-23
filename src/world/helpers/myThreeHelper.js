@@ -6,9 +6,9 @@ https://source.coderefinery.org/3d/threejs_std/-/blob/main/src/del4/ammoShapes2/
 import * as THREE from "three";
 import GUI from "lil-gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { Vector3 } from "three";
 
 export let g_scene, g_renderer, g_camera, g_controls, g_lilGui, g_store;
+
 
 export function createThreeScene() {
 	const canvas = document.createElement("canvas");
@@ -35,19 +35,15 @@ export function createThreeScene() {
 
 	// Kamera:
 	g_camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-	g_camera.position.x = 6;
-	g_camera.position.y = 7;
-	g_camera.position.z = 4;
-	setTimeout(() => {
-		g_camera.position.x = 10;
-		g_camera.position.y = 15;
-		g_camera.position.z = 20;
-	}, 2000);
-
+	g_camera.position.x = 30;
+	g_camera.position.y = 15;
+	g_camera.position.z = -25;
 
 	// TrackballControls:
 	g_controls = new OrbitControls(g_camera, g_renderer.domElement);
+	g_controls.target = new THREE.Vector3(0, 10, -25);
 	g_controls.addEventListener("change", renderScene);
+
 }
 
 export function addLights() {

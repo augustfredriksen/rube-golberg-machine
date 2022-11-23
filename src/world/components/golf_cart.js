@@ -5,7 +5,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 
-export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.PI/2}, position= {x: 0, y: 7.5, z: -40}) {
+export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.PI/2}, position= {x: 0, y: 7.5, z: -39}) {
     const mass = 100;
     let golfCart;
 	// THREE:
@@ -75,7 +75,6 @@ export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.
             golfCart.collisionResponse = (mesh1) => {
                     let velocityVector = new Ammo.btVector3(0, 0, 14);
                     rigidBody.setLinearVelocity(velocityVector);
-                
             };
         
             addMeshToScene(golfCart);

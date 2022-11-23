@@ -1,0 +1,11 @@
+Model Information:
+* title:	Toy rocket
+* source:	https://sketchfab.com/3d-models/toy-rocket-42ef8d4b882c4c94947479b427098498
+* author:	Alexander_Studenkov (https://sketchfab.com/Alexander_Studenkov)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Toy rocket" (https://sketchfab.com/3d-models/toy-rocket-42ef8d4b882c4c94947479b427098498) by Alexander_Studenkov (https://sketchfab.com/Alexander_Studenkov) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

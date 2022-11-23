@@ -1,0 +1,11 @@
+Model Information:
+* title:	Toy Soldier
+* source:	https://sketchfab.com/3d-models/toy-soldier-cacf0d85cfb2460294da4778a36760e3
+* author:	theraplay (https://sketchfab.com/theraplay)
+
+Model License:
+* license type:	CC-BY-ND-4.0 (http://creativecommons.org/licenses/by-nd/4.0/)
+* requirements:	Author must be credited. Modified versions can not be distributed. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Toy Soldier" (https://sketchfab.com/3d-models/toy-soldier-cacf0d85cfb2460294da4778a36760e3) by theraplay (https://sketchfab.com/theraplay) licensed under CC-BY-ND-4.0 (http://creativecommons.org/licenses/by-nd/4.0/)

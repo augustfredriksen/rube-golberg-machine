@@ -15,9 +15,6 @@ export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0,
 	let mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
     mesh.position.set(position.x, position.y, position.z);
-    mesh.collisionResponse = (mesh1) => {
-        rigidBody.setGravity(new Ammo.btVector3(0, -18, 0))
-	};
 
 	mesh.receiveShadow = true;
     mesh.castShadow = true;
@@ -34,14 +31,15 @@ export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0,
 	g_ammoPhysicsWorld.addRigidBody(
 		rigidBody,
 		1,
-        1 | 1 | 1 | 1);
+        1 | 1 | 1 | 15);
 
 	addMeshToScene(mesh);
+    
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
 }
 
-export function createRotatedDomino(radius, steps, centerX, centerZ) {
+export function createFullCircleDomino(radius, steps, centerX, centerZ) {
     var xValues = [centerX]
     var zValues = [centerZ]
     for (let i = 1; i < steps; i++) {
@@ -56,13 +54,50 @@ export function createRotatedDomino(radius, steps, centerX, centerZ) {
     }
 }
 
-export function createMultipleDominos(steps, position={x: 0, y: 7.5, z: -39}) {
+export function createHalfCircleDominoZ(radius, steps, centerX, centerZ) {
+    var xValues = [centerX]
+    var zValues = [centerZ]
+    for (let i = 1; i < steps; i++) {
+        xValues[i] = (centerX + radius * Math.sin(Math.PI * i / steps-Math.PI/2));
+        zValues[i] = (centerZ + radius * Math.cos(Math.PI * i / steps-Math.PI/2));
+        createAmmoDomino(
+            {x: 0, y: Math.PI + i*Math.PI/steps, z: 0},
+            {x: xValues[i], y: 0, z: zValues[i]}
+            )
+    }
+}
+
+export function createInverseHalfCircleDominoZ(radius, steps, centerX, centerZ) {
+    var xValues = [centerX]
+    var zValues = [centerZ]
+    for (let i = 1; i < steps; i++) {
+        xValues[i] = (centerX + radius * Math.sin(Math.PI * i / steps-Math.PI/2));
+        zValues[i] = (centerZ + radius * Math.cos(Math.PI * i / steps-Math.PI/2));
+        createAmmoDomino(
+            {x: 0, y: Math.PI - i*Math.PI/steps, z: 0},
+            {x: xValues[i], y: 0, z: -zValues[i]}
+            )
+    }
+}
+
+export function createHalfCircleDominoX(radius, steps, centerX, centerZ) {
+    var xValues = [centerX]
+    var zValues = [centerZ]
+    for (let i = 1; i < steps; i++) {
+        xValues[i] = (centerX + radius * Math.cos(Math.PI * i / steps-Math.PI/2));
+        zValues[i] = (centerZ + radius * Math.sin(Math.PI * i / steps-Math.PI/2));
+        createAmmoDomino(
+            {x: 0, y: Math.PI/2 - i*Math.PI/180, z: 0},
+            {x: xValues[i], y: 0, z: zValues[i]}
+            )};
+}
+
+export function createMultipleDominos(steps, position={x: 11, y: 2, z: -22}) {
     for (let i = 0; i < steps; i++) {
         createAmmoDomino(
             {x: 0, y: 0, z: 0},
             {x: position.x, y: position.y, z: position.z + i*0.5}
-            )
-    }
+            )};
 }
 
 export function createTriangleDominos(steps, position={x: 0, y: 0, z: 0}) {

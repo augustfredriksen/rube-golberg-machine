@@ -106,14 +106,6 @@ function checkCollisions(deltaTime) {
 					if (distance <= 0) {
 						// Vi har en kollisjon og er
 						// kun interessert i kollisjon mellom kulene:
-						if ((threeMesh0.name === 'domino' && threeMesh1.name === 'domino') ||
-							threeMesh1.name === 'domino' && threeMesh0.name === 'domino') {
-
-							if (typeof threeMesh0.collisionResponse === 'function')
-								threeMesh0.collisionResponse(threeMesh0);
-							if (typeof threeMesh1.collisionResponse === 'function')
-								threeMesh1.collisionResponse(threeMesh1);
-						}
 						if ((threeMesh0.name === 'golfclub' && threeMesh1.name === 'golfball') ||
 							threeMesh1.name === 'golfball' && threeMesh0.name === 'golfclub') {
 
@@ -131,6 +123,24 @@ function checkCollisions(deltaTime) {
 							if (typeof threeMesh1.collisionResponse === 'function')
 								threeMesh1.collisionResponse(threeMesh1);
 					}
+					if ((threeMesh0.name === 'hinge_sphere' && threeMesh1.name === 'golfball') ||
+						threeMesh1.name === 'golfball' && threeMesh0.name === 'hinge_sphere') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+					}
+
+					if ((threeMesh0.name === 'domino' && threeMesh1.name === 'seesawSphere') ||
+						threeMesh1.name === 'seesawSphere' && threeMesh0.name === 'domino') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+					}
+					
 					}
 				}
 			}

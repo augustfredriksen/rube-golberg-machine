@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { addMeshToScene, g_camera } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, g_camera, g_controls } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
@@ -86,6 +86,7 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
             1,1 );
 
             golfBall.collisionResponse = (mesh1) => {
+
                 //rigidBody.setGravity(new Ammo.btVector3(0, -1.80665, 0))
             };
     

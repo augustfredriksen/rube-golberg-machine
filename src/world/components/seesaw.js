@@ -3,134 +3,113 @@ import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 
-export async function createSeesaw() {
-    const arm = createArm();
-    const anchor = createAnchor();
-    createAmmoSeesawBottom();
-    const armLength = arm.threeMesh.geometry.parameters.height;
+export function createAmmoSeesaw(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 4.5, z: -23.5}) {
+    createAmmoSeesawPlank();
+    createAmmoSeesawSphere();
+	const mass=0;
+    const width = .2;
+    const height =9;
+    const depth = 1;
+	// THREE:
+	let geometry = new THREE.BoxGeometry( width, height, depth, 1, 1 );
+	let material = new THREE.MeshStandardMaterial( { color: colorScheme.gray, side: THREE.DoubleSide, transparent: true, opacity: 0.0 } );
+	let mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 
-	const anchorPivot = new Ammo.btVector3( 0, .5, 1 );
-	const anchorAxis = new Ammo.btVector3(0,1,0);
-	const armPivot = new Ammo.btVector3( - armLength/2, .5, 0.8 );
-	const armAxis = new Ammo.btVector3(0,1,0);
-	const hingeConstraint = new Ammo.btHingeConstraint(
-		anchor,
-		arm,
-		anchorPivot,
-		armPivot,
-		anchorAxis,
-		armAxis,
-		false
-	);
+	mesh.receiveShadow = true;
+	mesh.name = 'seesawPillar';
 
-	const lowerLimit = -Math.PI;
-	const upperLimit = Math.PI;
-	const softness = 5;
-	const biasFactor = .1;
-	const relaxationFactor = .1;
-	hingeConstraint.setLimit( lowerLimit, upperLimit, softness, biasFactor, relaxationFactor);
-	hingeConstraint.enableAngularMotor(true, 0, 1);
-	g_ammoPhysicsWorld.addConstraint( hingeConstraint, true );
+	// AMMO:
+	let shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, height/2, depth/2));
+	shape.setMargin( 0.05 );
+	let rigidBody = createAmmoRigidBody(shape, mesh, 0.7, 1, position, mass);
+
+	mesh.userData.physicsBody = rigidBody;
+
+	// Legger til physics world:
+	g_ammoPhysicsWorld.addRigidBody(
+		rigidBody,
+		1,
+        1 | 1 | 1);
+
+	addMeshToScene(mesh);
+	g_rigidBodies.push(mesh);
+	rigidBody.threeMesh = mesh;
 }
 
-function createArm(position={x: 0, y: 7.5, z:-22}) {
-	let width = .5;
-    let height = .1;
-    let depth = 6;
-	const mass = 0.2;
+function createAmmoSeesawPlank(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 9, z: -23.5}) {
+	const mass=10;
+    const width = 10;
+    const height =.1;
+    const depth = 1;
+	// THREE:
+	let geometry = new THREE.BoxGeometry( width, height, depth, 1, 1 );
+	let material = new THREE.MeshStandardMaterial( { color: colorScheme.blue, side: THREE.DoubleSide, transparent: true, opacity: 0.1 } );
+	let mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 
-	//THREE
-	const mesh = new THREE.Mesh(
-		new THREE.BoxGeometry(width, height, depth),
-		new THREE.MeshStandardMaterial({color: colorScheme.gray, transparent: true, opacity: 1}));
-	mesh.name = 'hinge_arm';
-	mesh.position.set(position.x, position.y, position.z);
-	mesh.castShadow = true;
 	mesh.receiveShadow = true;
-	mesh.collisionResponse = (mesh1) => {
-		mesh1.material.color.setHex(Math.random() * 0xffffff);
-	};
-	//AMMO
-	const shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, length/2, depth/2));
+    mesh.castShadow = true;
+
+	mesh.name = 'seesawPlank';
+
+	// AMMO:
+	let shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, height/2, depth/2));
 	shape.setMargin( 0.05 );
-	const rigidBody = createAmmoRigidBody(shape, mesh, 0.4, 0.6, position, mass);
+	let rigidBody = createAmmoRigidBody(shape, mesh, 0.7, 1, position, mass);
+
 	mesh.userData.physicsBody = rigidBody;
+
+	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
 		rigidBody,
 		1,
-		1 | 1 | 1);
-	g_rigidBodies.push(mesh);
-	rigidBody.threeMesh = mesh;
+        1 | 1 | 1);
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
+}
 
-	return rigidBody;
-    }
+function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 9.25, z: -23.5}) {
+	const mass=5;
+    const radius = 0.4;
+	// THREE:
+	let geometry = new THREE.SphereGeometry( radius );
+	let material = new THREE.MeshStandardMaterial( { color: colorScheme.yellow, side: THREE.DoubleSide } );
+	let mesh = new THREE.Mesh(geometry, material);
+    mesh.collisionResponse = (mesh1) => {
+        console.log("DEN TRAFF")
+        let velocityVector = new Ammo.btVector3(0, 0, -5);
+        rigidBody.setLinearVelocity(velocityVector);
+};
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 
-function createAnchor(position={x: 0, y: 7.5, z:-24}) {
-	const radius = .2;;
-	const mass = 0;
-
-	//THREE
-	const mesh = new THREE.Mesh(
-		new THREE.SphereGeometry(radius, 32, 32),
-		new THREE.MeshStandardMaterial({color: 0xb846db, transparent: true, opacity: .5}));
-	mesh.name = 'anchor';
-	mesh.position.set(position.x, position.y, position.z);
-	mesh.castShadow = true;
 	mesh.receiveShadow = true;
-	mesh.collisionResponse = (mesh1) => {
-		mesh1.material.color.setHex(Math.random() * 0xffffff);
-	};
-	//AMMO
-	const shape = new Ammo.btSphereShape(mesh.geometry.parameters.radius);
+    mesh.castShadow = true;
+	mesh.name = 'seesawSphere';
+
+	// AMMO:
+	let shape = new Ammo.btSphereShape(radius);
 	shape.setMargin( 0.05 );
-	const rigidBody = createAmmoRigidBody(shape, mesh, 0.4, 0.6, position, mass);
+	let rigidBody = createAmmoRigidBody(shape, mesh, .5, 0.5, position, mass);
+
 	mesh.userData.physicsBody = rigidBody;
+
+
+	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(
 		rigidBody,
 		1,
-		1 | 1 | 1);
-	g_rigidBodies.push(mesh);
-	rigidBody.threeMesh = mesh;
+        1 | 1 | 1 | 15);
 
 	addMeshToScene(mesh);
+    
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
 
-	return rigidBody;
-    }
+}
 
-    function createAmmoSeesawBottom(position={x: 0, y: 7, z:-24}) {
-        let width = .2;
-        let height = 1;
-        let depth = .2;
-        const mass = 0;
-    
-        //THREE
-        const mesh = new THREE.Mesh(
-            new THREE.BoxGeometry(width, height, depth),
-            new THREE.MeshStandardMaterial({color: colorScheme.gray, transparent: true, opacity: 1}));
-        mesh.name = 'seesaw_bottom';
-        mesh.position.set(position.x, position.y, position.z);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        //AMMO
-        let shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, height/2, depth/2));
-        shape.setMargin( 0.05 );
-        let rigidBody = createAmmoRigidBody(shape, mesh, 0.7, 1, position, mass);
-    
-        mesh.userData.physicsBody = rigidBody;
-    
-        // Legger til physics world:
-        g_ammoPhysicsWorld.addRigidBody(
-            rigidBody,
-            1,
-            1 | 1 | 1);
-    
-        addMeshToScene(mesh);
-        g_rigidBodies.push(mesh);
-        rigidBody.threeMesh = mesh;
-        }

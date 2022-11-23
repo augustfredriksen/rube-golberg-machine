@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { addMeshToScene } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, g_camera, g_controls } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
@@ -58,6 +58,10 @@ function createSphere(position={x: 0, y: 5, z:-40}) {
 		1 | 1 | 1);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
+
+    mesh.collisionResponse = (mesh1) => {
+        //rigidBody.setGravity(new Ammo.btVector3(0, -1.80665, 0))
+    };
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
@@ -121,7 +125,7 @@ function createAnchor(position={x: 0, y: 5.2, z:-40}) {
 
     async function createSwingParts(groupMesh, compoundShape) {
         let pillarGeometry = new THREE.BoxGeometry(.5, 5, .5);
-        let material = new THREE.MeshStandardMaterial({color: 0xb846db, transparent: true, opacity: 1});
+        let material = new THREE.MeshStandardMaterial({color: colorScheme.pink, transparent: true, opacity: 1});
         let pillarMesh = new THREE.Mesh(pillarGeometry, material);
         pillarMesh.castShadow = true;
         pillarMesh.receiveShadow = true;
