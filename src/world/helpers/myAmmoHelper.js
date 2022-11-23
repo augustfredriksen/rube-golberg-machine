@@ -114,6 +114,30 @@ function checkCollisions(deltaTime) {
 							if (typeof threeMesh1.collisionResponse === 'function')
 								threeMesh1.collisionResponse(threeMesh1);
 						}
+						if ((threeMesh0.name === 'seesawSphere' && threeMesh1.name === 'button') ||
+						threeMesh1.name === 'button' && threeMesh0.name === 'seesawSphere') {
+
+						if (typeof threeMesh0.collisionResponse === 'function')
+							threeMesh0.collisionResponse(threeMesh0);
+						if (typeof threeMesh1.collisionResponse === 'function')
+							threeMesh1.collisionResponse(threeMesh1);
+					}
+						if ((threeMesh0.name === 'domino' && threeMesh1.name === 'domino') ||
+							threeMesh1.name === 'domino' && threeMesh0.name === 'domino') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+						}
+						if ((threeMesh0.name === 'golf_course_2' && threeMesh1.name === 'seesawSphere') ||
+						threeMesh1.name === 'seesawSphere' && threeMesh0.name === 'golf_course_2') {
+
+						if (typeof threeMesh0.collisionResponse === 'function')
+							threeMesh0.collisionResponse(threeMesh0);
+						if (typeof threeMesh1.collisionResponse === 'function')
+							threeMesh1.collisionResponse(threeMesh1);
+					}
 
 						if ((threeMesh0.name === 'hinge_sphere' && threeMesh1.name === 'golf_cart') ||
 						threeMesh1.name === 'golf_cart' && threeMesh0.name === 'hinge_sphere') {

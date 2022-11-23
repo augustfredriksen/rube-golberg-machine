@@ -24,7 +24,7 @@ export function createAmmoCubeShapes(
 	mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 
 	mesh.receiveShadow = true;
-	mesh.name = "xzplane";
+	mesh.name = "golf_course_2";
 
 	// AMMO:
 	let shape = new Ammo.btBoxShape(new Ammo.btVector3(length / 2, depth / 2, width / 2));
@@ -35,6 +35,46 @@ export function createAmmoCubeShapes(
 
 	// Legger til physics world:
 	g_ammoPhysicsWorld.addRigidBody(rigidBody, 1, 1 | 1 | 1);
+
+	addMeshToScene(mesh);
+	g_rigidBodies.push(mesh);
+	rigidBody.threeMesh = mesh;
+
+	return rigidBody;
+}
+
+export function createAmmoButton(
+	rotation = { x: 0, y: 0, z: 0 },
+	position = { x: 0, y: 0, z: 0 },
+	width = 1,
+	length = 1,
+	depth = 1,
+	color = 0xa8a8f8
+) {
+	const mass = 0;
+	// THREE:
+	let geometry = new THREE.BoxGeometry(length, depth, width, 1, 1);
+	let material = new THREE.MeshStandardMaterial({ color: color, side: THREE.DoubleSide });
+	let mesh = new THREE.Mesh(geometry, material);
+	mesh.position.set(position.x, position.y, position.z);
+	mesh.rotation.set(rotation.x, rotation.y, rotation.z);
+
+	mesh.receiveShadow = true;
+	mesh.name = "button";
+
+	// AMMO:
+	let shape = new Ammo.btBoxShape(new Ammo.btVector3(length / 2, depth / 2, width / 2));
+	//shape.setMargin( 0.05 );
+	let rigidBody = createAmmoRigidBody(shape, mesh, 0.7, 0.8, position, mass);
+
+	mesh.userData.physicsBody = rigidBody;
+
+	// Legger til physics world:
+	g_ammoPhysicsWorld.addRigidBody(rigidBody, 1, 1 | 1 | 1);
+
+	mesh.collisionResponse = (mesh1) => {
+		mesh1.material.color.setHex( 0xff0000);
+	};
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
@@ -79,5 +119,6 @@ export function createGolfCourse2() {
 	let rampObstacleLeft = createAmmoCubeShapes({ x: 0, y: 0, z: 0 }, { x: 2.5, y: 1.5, z: -33 }, 1, 4, 1, colorScheme.yellow);
 	let goal = createTorus({ x: Math.PI / 2, y: 0, z: 0 }, { x: 20, y: 1.5, z: 1 });
     let startPos = createAmmoCube({x: 0, y: 0, z: 0}, {x: 20, y: 1.5, z: -44});
+	let button = createAmmoButton({ x: 0, y: 0, z: 0 }, { x: 14.25, y: 1.5, z: -23.5 }, .5, .5, .5, colorScheme.blue)
     return golfCourse2;
 }

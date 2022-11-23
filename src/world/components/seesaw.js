@@ -3,6 +3,8 @@ import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 
+let sphereCollided = false;
+
 export function createAmmoSeesaw(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 4.5, z: -23.5}) {
     createAmmoSeesawPlank();
     createAmmoSeesawSphere();
@@ -73,18 +75,13 @@ function createAmmoSeesawPlank(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 
 	rigidBody.threeMesh = mesh;
 }
 
-function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 9.25, z: -23.5}) {
-	const mass=5;
+function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4.2, y: 9.25, z: -23.5}) {
+	const mass=15;
     const radius = 0.4;
 	// THREE:
 	let geometry = new THREE.SphereGeometry( radius );
 	let material = new THREE.MeshStandardMaterial( { color: colorScheme.yellow, side: THREE.DoubleSide } );
 	let mesh = new THREE.Mesh(geometry, material);
-    mesh.collisionResponse = (mesh1) => {
-        console.log("DEN TRAFF")
-        let velocityVector = new Ammo.btVector3(0, 0, -5);
-        rigidBody.setLinearVelocity(velocityVector);
-};
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 
@@ -95,9 +92,14 @@ function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y:
 	// AMMO:
 	let shape = new Ammo.btSphereShape(radius);
 	shape.setMargin( 0.05 );
-	let rigidBody = createAmmoRigidBody(shape, mesh, .5, 0.5, position, mass);
+	let rigidBody = createAmmoRigidBody(shape, mesh, .2, 1, position, mass);
+	rigidBody.setRollingFriction(1);
 
 	mesh.userData.physicsBody = rigidBody;
+	mesh.collisionResponse = (mesh1) => {
+		sphereCollided = true;
+		rigidBody.setGravity(new Ammo.btVector3(0, -20, 0));
+	};
 
 
 	// Legger til physics world:

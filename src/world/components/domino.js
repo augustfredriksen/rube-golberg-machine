@@ -7,7 +7,7 @@ import { colorScheme } from "../../../static/colorScheme.js";
 export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0, y: 0, z: 0}) {
 	const mass=2;
     const width = 0.5;
-    const height = 1;
+    const height = 1.2;
     const depth = 0.15;
 	// THREE:
 	let geometry = new THREE.BoxGeometry( width, height, depth, 1, 1 );
@@ -34,6 +34,10 @@ export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0,
         1 | 1 | 1 | 15);
 
 	addMeshToScene(mesh);
+
+    mesh.collisionResponse = (mesh1) => {
+        rigidBody.setGravity(new Ammo.btVector3(0, -(9.80665*2), 0))
+    }
     
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;

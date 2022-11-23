@@ -20,6 +20,7 @@ import { createAmmoSphere } from "./components/sphere";
 import { createAmmoSeesaw } from "./components/seesaw";
 import { createAmmoToyCar } from "./components/toy_car";
 import { createAmmoToySoldier } from "./components/toy_soldier";
+import { createAmmoRocket, createAmmoToyRocket } from "./components/toy_rocket";
 
 //Globale variabler:
 let g_clock;
@@ -61,7 +62,6 @@ function handleKeyDown(event) {
 async function addAmmoSceneObjects() {
     createAmmoXZPlane();
 	createGolfCourse();
-    createGolfCourse2();
     createAmmoGolfBall();
     secondFunction();
     await createHingedSphere();
@@ -83,13 +83,16 @@ async function addAmmoSceneObjects() {
     )
 
     createFlipper({x: 12, y: 1.7, z:-22});
-    createFlipper2({x: 8, y: 1.7, z:-34.5});
     //createAmmoCube();
     createMultipleDominos(35, {x: 14, y: 2, z: -22});
     createHalfCircleDominoZ(4, 40, 10, -5);
-    createMultipleDominos(36, {x: 6, y: 2, z: -22.5});
+    createMultipleDominos(61, {x: 6, y: 2, z: -34.8});
     createInverseHalfCircleDominoZ(2, 20, 8, 35);
+    createMultipleDominos(22, {x: 10, y: 2, z: -34.8});
     createAmmoSeesaw();
+	createAmmoRocket();
+    createGolfCourse2();
+
 
     /* createMultipleDominos(12, {x: 1.25, y: 7.5, z: -30})
     createMultipleDominos(12, {x: -1.25, y: 7.5, z: -30})
