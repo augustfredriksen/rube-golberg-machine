@@ -3,9 +3,11 @@ import { addMeshToScene, getRigidBodyFromMesh } from "../helpers/myThreeHelper.j
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { intializeCar } from "../helpers/myAudioHelper.js";
 
 
 export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.PI/2}, position= {x: 0, y: 7.5, z: -39}) {
+    let isCollided = false;
     const mass = 100;
     let golfCartMesh;
 	// THREE:
@@ -72,8 +74,13 @@ export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.
                 rigidBody);
 
             golfCartMesh.collisionResponse = (mesh1) => {
+                if(!isCollided) {
+                    intializeCar();
+                    isCollided = true;
                     let velocityVector = new Ammo.btVector3(0, 0, 14);
                     rigidBody.setLinearVelocity(velocityVector);
+                }
+                    
             };
         
             addMeshToScene(golfCartMesh);

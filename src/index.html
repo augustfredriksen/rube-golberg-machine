@@ -10,6 +10,35 @@
 </div>
 <body>
 <script src="../static/lib/ammo/ammo.js"></script>
+<script type="x-shader/x-vertex" id="vertexshader">
+    precision mediump float;
+
+    attribute vec3 position;
+    attribute vec4 color;
+    attribute float aRandomValue;
+
+    //Merk: Disse sendes inn automatisk.
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+
+    varying vec4 vColor;
+    varying float vRandomValue;
+    void main() {
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+        vColor = color;
+        vRandomValue = aRandomValue;
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="fragmentshader">
+    precision mediump float;
+    varying lowp vec4 vColor;
+    varying float vRandomValue;
+    void main()
+    {
+        gl_FragColor = vColor * vRandomValue;
+    }
+</script>
 
 </body>
 </html>

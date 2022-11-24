@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { addMeshToScene, getRigidBodyFromMesh, initializeBoing } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, getRigidBodyFromMesh } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createAmmoRamp } from "./ramp.js";
@@ -8,6 +8,7 @@ import { createTorus } from "./torus.js";
 import { createAmmoCube } from "./cube.js";
 import { createAmmoSeesawSphere, sphereRigidBody } from "./seesaw.js";
 import { createTrapDoorCube } from "./trapDoorCube.js";
+import { intializeButton } from "../helpers/myAudioHelper.js";
 
 let hasCollided = false;
 
@@ -97,7 +98,7 @@ export function createAmmoButton(
 
             cubeRigidBody.activate(true);
             mesh1.material.color.setHex( 0xff0000);
-            initializeBoing();
+            intializeButton();
             hasCollided = true;
         }
 
@@ -150,7 +151,7 @@ export function createGolfCourse2() {
 	let button = createAmmoButton({ x: 0, y: 0, z: 0 }, { x: 14.15, y: 1.3, z: -23.5 }, .5, .5, .5, colorScheme.blue)
     return golfCourse2;
 }
-export function createAmmoRocket(rotation={x: 0, y: 0, z: 0}, position= {x: 10, y: 2, z: -20}) {
+export function createAmmoRocket(rotation={x: 0, y: 0, z: 0}, position= {x: 15, y: 2, z: -20}) {
 	const mass=15;
     const width = 1;
     const height =2;

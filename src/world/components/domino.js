@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import { TWEEN } from 'three/examples/jsm/libs/tween.module.min'
-import { addMeshToScene, intializeDomino } from "../helpers/myThreeHelper.js";
+import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
+import { intializeDomino } from "../helpers/myAudioHelper.js";
 
 export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0, y: 0, z: 0}) {
     let hasCollided = false;

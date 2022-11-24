@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
+import { intializeBing, intializeDrop } from "../helpers/myAudioHelper.js";
 
 let sphereCollided = false;
 
@@ -72,12 +73,28 @@ function createAmmoSeesawPlank(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 
 }
 
 export function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x: 4, y: 9.25, z: -23.5}) {
+	let rawShaderMaterial = new THREE.RawShaderMaterial({
+		vertexShader: document.getElementById('vertexshader').textContent,
+		fragmentShader: document.getElementById('fragmentshader').textContent
+	});
+	let isCollided = false;
 	const mass=20;
     const radius = 0.4;
 	// THREE:
 	let geometry = new THREE.SphereGeometry( radius );
+	let vertexCount = geometry.attributes.position.count;
+	let colors = [];
+	let randomValues = [];
+	for (let i=0; i<vertexCount;i++) {
+		colors.push(0.0, 0.0, 1.0, 1.0);
+		randomValues.push(Math.random());
+	}
+	let sphereColors = new Float32Array(colors);
+	let sphereRandomValues = new Float32Array(randomValues);
+	geometry.setAttribute( 'color', new THREE.BufferAttribute( sphereColors, 4 ) );
+	geometry.setAttribute( 'aRandomValue', new THREE.BufferAttribute( sphereRandomValues, 1 ) );
 	let material = new THREE.MeshStandardMaterial( { color: colorScheme.yellow, side: THREE.DoubleSide } );
-	let mesh = new THREE.Mesh(geometry, material);
+	let mesh = new THREE.Mesh(geometry, rawShaderMaterial);
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 
@@ -98,6 +115,15 @@ export function createAmmoSeesawSphere(rotation={x: 0, y: 0, z: 0}, position= {x
 		rigidBody);
 
 	addMeshToScene(mesh);
+
+	mesh.collisionResponse = (mesh1) => {
+        if(!isCollided) {
+            intializeBing();
+			let velocityVector = new Ammo.btVector3(2, 0, 0);
+            rigidBody.setLinearVelocity(velocityVector);
+            isCollided = true;
+        }
+    };
     
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;

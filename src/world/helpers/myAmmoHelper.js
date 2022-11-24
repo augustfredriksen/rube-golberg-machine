@@ -148,8 +148,33 @@ function checkCollisions(deltaTime) {
 							threeMesh1.collisionResponse(threeMesh1);
 					}
 
+					if ((threeMesh0.name === 'xzplane' && threeMesh1.name === 'seesawSphere') ||
+						threeMesh1.name === 'seesawSphere' && threeMesh0.name === 'xzplane') {
+
+						if (typeof threeMesh0.collisionResponse === 'function')
+							threeMesh0.collisionResponse(threeMesh0);
+						if (typeof threeMesh1.collisionResponse === 'function')
+							threeMesh1.collisionResponse(threeMesh1);
+					}
+					if ((threeMesh0.name === 'flipper_arm' && threeMesh1.name === 'seesawSphere') ||
+						threeMesh1.name === 'seesawSphere' && threeMesh0.name === 'flipper_arm') {
+
+						if (typeof threeMesh0.collisionResponse === 'function')
+							threeMesh0.collisionResponse(threeMesh0);
+						if (typeof threeMesh1.collisionResponse === 'function')
+							threeMesh1.collisionResponse(threeMesh1);
+					}
+
 						if ((threeMesh0.name === 'hinge_sphere' && threeMesh1.name === 'golf_cart') ||
 						threeMesh1.name === 'golf_cart' && threeMesh0.name === 'hinge_sphere') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+					}
+					if ((threeMesh0.name === 'spring_board' && threeMesh1.name === 'golf_cart') ||
+						threeMesh1.name === 'golf_cart' && threeMesh0.name === 'spring_board') {
 
 							if (typeof threeMesh0.collisionResponse === 'function')
 								threeMesh0.collisionResponse(threeMesh0);

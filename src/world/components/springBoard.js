@@ -5,7 +5,7 @@ import { colorScheme } from "../../../static/colorScheme.js";
 import { intializeSpringBoard } from "../helpers/myAudioHelper.js";
 
 
-export function createAmmoRamp(width, length, depth, mass ,rotation={x: Math.PI/10, y: 0, z: 0}, position= {x: 0, y: 2, z: -40}) {
+export function createAmmoSpringBoard(width = 1, length = .1, depth = 3, mass = 10 ,rotation={x: 0, y: 0, z: 0}, position= {x: 0, y: 7, z: -24.8}) {
 	let isCollided = false;
     let geometry = new THREE.BoxGeometry(width, length, depth);
 	let material = new THREE.MeshStandardMaterial( { color: colorScheme.blue, side: THREE.DoubleSide } );
@@ -15,7 +15,7 @@ export function createAmmoRamp(width, length, depth, mass ,rotation={x: Math.PI/
 
 	mesh.receiveShadow = true;
     mesh.castShadow = true;
-	mesh.name = 'ramp';
+	mesh.name = 'spring_board';
     let height = mesh.geometry.parameters.height
 	let shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, length/2, depth/2));
 	shape.setMargin( 0.05 );
@@ -27,9 +27,15 @@ export function createAmmoRamp(width, length, depth, mass ,rotation={x: Math.PI/
 	g_ammoPhysicsWorld.addRigidBody(
 		rigidBody);
 
+    mesh.collisionResponse = (mesh1) => {
+        if(!isCollided) {
+            intializeSpringBoard();
+            isCollided = true;
+        }
+    };
+
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
 }
-

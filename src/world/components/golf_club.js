@@ -1,8 +1,9 @@
 import * as THREE from "three";
-import { addMeshToScene, getRigidBodyFromMesh, g_audio, intializeGolfSwing } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, getRigidBodyFromMesh } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
+import { intializeGolfSwing } from "../helpers/myAudioHelper.js";
 
 export const secondFunction = async () => {
     const golfClub = await createAmmoGolfClub();

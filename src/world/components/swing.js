@@ -1,8 +1,9 @@
 import * as THREE from "three";
-import { addMeshToScene, g_camera, g_controls, initializeBoing, intializeDomino, intializeGolfSwing } from "../helpers/myThreeHelper.js";
+import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
+import { intializeDrop } from "../helpers/myAudioHelper.js";
 
 export async function createHingedSphere() {
     const sphere = createSphere();
@@ -47,7 +48,7 @@ function createSphere(position={x: 0, y: 5, z:-40}) {
 	mesh.receiveShadow = true;
 	mesh.collisionResponse = (mesh1) => {
         if(!isCollided) {
-            initializeBoing();
+            intializeDrop();
             isCollided = true;
         }
 	};

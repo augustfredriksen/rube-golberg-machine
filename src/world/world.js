@@ -23,6 +23,7 @@ import { createAmmoToySoldier } from "./components/toy_soldier";
 import { createAmmoRocket, createAmmoToyRocket } from "./components/toy_rocket";
 import { createTrapDoorTriangleMesh } from "./components/trapDoor";
 import { createTrapDoorCube } from "./components/trapDoorCube";
+import { createAmmoSpringBoard } from "./components/springBoard";
 
 //Globale variabler:
 let g_clock;
@@ -66,7 +67,7 @@ function handleKeyDown(event) {
 async function addAmmoSceneObjects() {
     createAmmoXZPlane();
 	createGolfCourse();
-    secondFunction();
+    await secondFunction();
     createAmmoGolfBall();
     await createSwingTriangleMesh();
     await createHingedSphere();
@@ -79,14 +80,7 @@ async function addAmmoSceneObjects() {
         {x: -Math.PI/10, y: 0, z: 0},
         {x: 0, y: 7, z: -36}
     )
-    createAmmoRamp(
-        1,
-        0.1,
-        3,
-        10,
-        {x: 0, y: 0, z: 0},
-        {x: 0, y: 7, z: -24.8}
-    )
+    createAmmoSpringBoard();
     createAmmoRamp(
         2,
         0.1,
@@ -104,7 +98,7 @@ async function addAmmoSceneObjects() {
     //createAmmoCube();
     createMultipleDominos(35, {x: 14, y: 2, z: -22});
     createHalfCircleDominoZ(4, 40, 10, -5);
-    createMultipleDominos(61, {x: 6, y: 2, z: -34.8});
+    createMultipleDominos(60, {x: 6, y: 2, z: -34.8});
     createInverseHalfCircleDominoZ(2, 20, 8, 35);
     //createTrapDoorCube();
 

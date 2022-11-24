@@ -123,45 +123,7 @@ export async function getRigidBodyFromMesh(meshName) {
 	else return null;
 }
 
-export function initializeBoing() {
-	const listener = new THREE.AudioListener();
-	g_camera.add(listener);
-	const sound = new THREE.Audio(listener);
-	const loader = new THREE.AudioLoader();
-	loader.load('assets/sounds/Boing.mp3', (buffer) => {
-		sound.offset = 0;
-		sound.duration = .5;
-		sound.setBuffer(buffer);
-		sound.setVolume(.5);
-		sound.play();
-	})
-}
 
-export function intializeDomino() {
-	const listener = new THREE.AudioListener();
-	g_camera.add(listener);
-	const sound = new THREE.Audio(listener);
-	const loader = new THREE.AudioLoader();
-	loader.load('assets/sounds/clack.mp3', (buffer) => {
-		sound.duration = 1;
-		sound.setBuffer(buffer);
-		sound.setVolume(.5);
-		sound.play();
-	})
-}
-
-export function intializeGolfSwing() {
-	const listener = new THREE.AudioListener();
-	g_camera.add(listener);
-	const sound = new THREE.Audio(listener);
-	const loader = new THREE.AudioLoader();
-	loader.load('assets/sounds/golf.mp3', (buffer) => {
-		sound.duration = 1;
-		sound.setBuffer(buffer);
-		sound.setVolume(.5);
-		sound.play();
-	})
-}
 
 export function addLineBetweenObjects(nameMeshStart, nameMeshEnd) {
 	let lineMeshStartPosition = g_scene.getObjectByName(nameMeshStart, true);

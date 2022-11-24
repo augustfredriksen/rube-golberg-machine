@@ -22,7 +22,7 @@ export function createTrapDoorCube(rotation={x: 0, y: 0, z: 0}, position= {x: 10
 	// AMMO:
 	let shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, height/2, depth/2));
 	shape.setMargin( 0.05 );
-	let rigidBody = createAmmoRigidBody(shape, mesh, 0.1, .1, position, mass);
+	let rigidBody = createAmmoRigidBody(shape, mesh, 0.1, 0, position, mass);
 
 	mesh.userData.physicsBody = rigidBody;
 

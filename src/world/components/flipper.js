@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
+import { intializeSwingDoor } from "../helpers/myAudioHelper.js";
 
 export async function createFlipper(position={x: 12, y: 1.7, z:-25}) {
     const anchor = createAnchor({x: position.x, y: position.y, z: position.z});
@@ -60,6 +61,7 @@ export async function createFlipper2(position={x: 11, y: 1.7, z:-26}) {
 }
 
 function createArm(position={x: 12, y: 1.5, z:-25}) {
+	let isCollided = false;
 	let width = .1;
     let height = .5;
     let depth = 2;
@@ -74,8 +76,11 @@ function createArm(position={x: 12, y: 1.5, z:-25}) {
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	mesh.collisionResponse = (mesh1) => {
-		mesh1.material.color.setHex(Math.random() * 0xffffff);
-	};
+        if(!isCollided) {
+			intializeSwingDoor();
+            isCollided = true;
+        }
+    };
 	//AMMO
 	const shape = new Ammo.btBoxShape(new Ammo.btVector3(width/2, height/2, depth/2));
 	shape.setMargin( 0.05 );
@@ -119,6 +124,8 @@ function createAnchor(position={x: 12, y: 1.7, z:-22}) {
 		1 | 1 | 1);
 	g_rigidBodies.push(mesh);
 	rigidBody.threeMesh = mesh;
+
+
 
 	addMeshToScene(mesh);
 	g_rigidBodies.push(mesh);
