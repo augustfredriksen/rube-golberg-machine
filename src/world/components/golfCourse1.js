@@ -7,7 +7,7 @@ import { createAmmoCone } from "./cone.js";
 import { createTorus } from "./torus.js";
 import { createAmmoCube } from "./cube.js";
 
-export function createAmmoCubeShapes(
+export function createAmmoCubeShape(
 	rotation={x: 0, y: 0, z: 0},
 	position= {x: 0, y: 0, z: 0},
 	width = 1,
@@ -43,67 +43,67 @@ export function createAmmoCubeShapes(
 }
 
 export function createGolfCourse() {
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: 0, z: 0},
         {x: 0, y: 1, z: -22},
         50, 9, 1,
         colorScheme.pink,
     )
-	createAmmoCubeShapes(
+	createAmmoCubeShape(
 		{x: 0, y: 0, z: Math.PI/2},
 		{x: 5, y: 1, z: -22},
 		50, 2, 1,
         colorScheme.yellow
 		);
-	createAmmoCubeShapes(
+	createAmmoCubeShape(
 		{x: 0, y: 0, z: Math.PI/2},
 		{x: -5, y: 1, z: -22},
 		50, 2, 1,
         colorScheme.yellow
 		);
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: Math.PI/2, z: Math.PI/2},
         {x: 0, y: 1, z: -47},
         11, 2, 1,
         colorScheme.yellow
         );
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: Math.PI/7, z: Math.PI/2},
         {x: 3.5, y: 1, z: -15},
         7, 2, .5,
         colorScheme.yellow
         );
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: Math.PI/2, z: Math.PI/2},
         {x: -3, y: 1, z: -22},
         5, 2, .5,
         colorScheme.yellow
         );
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: Math.PI/10, y: 0, z: 0},
         {x: 0, y: 2, z: -34},
         6, 1, .2,
         colorScheme.blue
         );
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: 0, z: 0},
         {x: 0, y: 2, z: -37},
         .4, 1, 2,
         colorScheme.blue
         );
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: 0, z: 0},
         {x: 0, y: 2, z: -39.5},
         5, 9, 2,
         colorScheme.pink
         );
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: 0, z: 0},
         {x: -2.5, y: 1.5, z: -33},
         1, 4, 1,
         colorScheme.yellow
         );
-    createAmmoCubeShapes(
+    createAmmoCubeShape(
         {x: 0, y: 0, z: 0},
         {x: 2.5, y: 1.5, z: -33},
         1, 4, 1,

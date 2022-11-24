@@ -31,7 +31,7 @@ export function createTrapDoorCube(rotation={x: 0, y: 0, z: 0}, position= {x: 10
 		rigidBody);
 
         mesh.collisionResponse = (mesh1) => {
-            let velocityVector = new Ammo.btVector3(0, 0, 14);
+            let velocityVector = new Ammo.btVector3(0, 0, 20);
             rigidBody.setLinearVelocity(velocityVector);
     };
 

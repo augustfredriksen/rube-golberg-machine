@@ -117,6 +117,7 @@ export function createGolfCourse2() {
 	let floor = createAmmoCubeShapes({ x: 0, y: 0, z: 0 }, { x: 20, y: 1, z: -22 }, 50, 9, 1, colorScheme.pink);
 	let leftWall = createAmmoCubeShapes({ x: 0, y: 0, z: Math.PI / 2 }, { x: 25, y: 1, z: -22 }, 50, 2, 1, colorScheme.yellow);
 	let rightWall = createAmmoCubeShapes({ x: 0, y: 0, z: Math.PI / 2 }, { x: 15, y: 1, z: -22 }, 50, 2, 1, colorScheme.yellow);
+	
 	let frontWall = createAmmoCubeShapes(
 		{ x: 0, y: Math.PI / 2, z: Math.PI / 2 },
 		{ x: 20, y: 1, z: 3 },

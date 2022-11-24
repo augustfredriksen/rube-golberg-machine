@@ -2,7 +2,7 @@ import "../style.css";
 import * as THREE from "three";
 import { Vector3 } from "three";
 
-import { addLineBetweenObjects, createThreeScene, getRigidBodyFromMesh, g_audio, handleKeys, initializeBoing, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
+import { addLineBetweenObjects, createThreeScene, getRigidBodyFromMesh, g_audio, handleKeys, onWindowResize, renderScene, updateThree } from "./helpers/myThreeHelper.js";
 
 import { createAmmoWorld, updatePhysics } from "./helpers/myAmmoHelper.js";
 import { createAmmoXZPlane} from "./components/plane";
@@ -24,6 +24,8 @@ import { createAmmoRocket, createAmmoToyRocket } from "./components/toy_rocket";
 import { createTrapDoorTriangleMesh } from "./components/trapDoor";
 import { createTrapDoorCube } from "./components/trapDoorCube";
 import { createAmmoSpringBoard } from "./components/springBoard";
+import { initializeBoing } from "./helpers/myAudioHelper";
+import { createMultipleBoxes, createMultipleBoxesY } from "./components/boxMaker";
 
 //Globale variabler:
 let g_clock;
@@ -36,6 +38,7 @@ export async function main() {
 
 	// three:
 	createThreeScene();
+	initializeBoing();
 
 
 	// ammo
@@ -71,7 +74,7 @@ async function addAmmoSceneObjects() {
     createAmmoGolfBall();
     await createSwingTriangleMesh();
     await createHingedSphere();
-    createAmmoGolfCart();
+    await createAmmoGolfCart();
     createAmmoRamp(
         1,
         0.1,
@@ -87,7 +90,7 @@ async function addAmmoSceneObjects() {
         4,
         0,
         {x: -Math.PI/10, y: 0, z: 0},
-        {x: 10, y: 1.5, z: -18}
+        {x: 10, y: 1.5, z: -15}
     )
     createAmmoSphere(
         {x: 0, y: 0, z: 0},
@@ -109,6 +112,8 @@ async function addAmmoSceneObjects() {
     
     
     await createTrapDoorTriangleMesh();
+
+	createMultipleBoxesY(10, {x: 7, y: 3, z: 4.5});
 
 
 

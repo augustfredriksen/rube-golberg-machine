@@ -17,7 +17,9 @@ export async function createAmmoGolfCart(rotation={x: -Math.PI/2, y: 0, z: Math.
 	loader.setDRACOLoader(dracoLoader);
 	return new Promise((resolve, reject) => {
 		loader.load("assets/models/golf_cart/scene.gltf", (gltf) => {
-			golfCartMesh = gltf.scene.children[0].children[0].children[0].children[1];
+			const golfCart = gltf.scene.children[0].children[0].children[0].children[1];
+            
+            golfCartMesh = new THREE.Mesh(golfCart.geometry, golfCart.material);
             golfCartMesh.name = "golf_cart";
             golfCartMesh.scale.set(0.01, 0.01, 0.01);
             golfCartMesh.position.set(position.x, position.y, position.z);

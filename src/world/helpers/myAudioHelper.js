@@ -7,8 +7,6 @@ export function initializeBoing() {
 	const sound = new THREE.Audio(listener);
 	const loader = new THREE.AudioLoader();
 	loader.load('assets/sounds/Boing.mp3', (buffer) => {
-		sound.offset = 0;
-		sound.duration = .5;
 		sound.setBuffer(buffer);
 		sound.setVolume(.5);
 		sound.play();
