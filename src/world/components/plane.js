@@ -8,7 +8,7 @@ import { createAmmoCone } from "./cone.js";
 
 export function createAmmoXZPlane(
 	rotation={x: 0, y: 0, z: 0},
-	position= {x: 10, y: 0, z: -22},
+	position= {x: 23, y: 0, z: -22},
 	width = 55,
 	length = 35,
 	depth = 2,

@@ -7,7 +7,6 @@ import { Vector3 } from "three";
 
 
 export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0, y: 2, z: 0}) {
-    let isCollided = false;
 	const mass=5;
     let golfBall;
 	// THREE:
@@ -86,7 +85,8 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
             rigidBody);
 
             golfBall.collisionResponse = (mesh1) => {
-
+                    let forceVector = new Ammo.btVector3(0, 0, -10);
+                    rigidBody.applyForce(forceVector);
             };
     
         addMeshToScene(golfBall);

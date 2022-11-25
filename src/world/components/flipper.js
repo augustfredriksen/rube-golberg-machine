@@ -65,7 +65,7 @@ function createArm(position={x: 12, y: 1.5, z:-25}) {
 	let width = .1;
     let height = .5;
     let depth = 2;
-	const mass = 1;
+	const mass = 5;
 
 	//THREE
 	const mesh = new THREE.Mesh(

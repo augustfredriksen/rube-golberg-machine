@@ -38,9 +38,12 @@ export function createThreeScene() {
 	g_camera.position.x = 30;
 	g_camera.position.y = 15;
 	g_camera.position.z = -25;
+	console.log(g_camera.position)
 
 	// TrackballControls:
 	g_controls = new OrbitControls(g_camera, g_renderer.domElement);
+	g_controls.minDistance = 10;
+	g_controls.maxDistance = 50;
 	g_controls.target = new THREE.Vector3(0, 10, -25);
 	g_controls.addEventListener("change", renderScene);
 

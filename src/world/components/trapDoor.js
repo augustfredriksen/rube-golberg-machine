@@ -4,7 +4,7 @@ import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpe
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
 
-export async function createTrapDoorTriangleMesh(position={x: 8.5, y: 3, z: -25}) {
+export async function createTrapDoorTriangleMesh(position={x: 8.5, y: 2, z: -25}) {
     const mass = 0;
     let compoundShape = new Ammo.btCompoundShape();
     let groupMesh = new THREE.Group();
@@ -25,7 +25,7 @@ export async function createTrapDoorTriangleMesh(position={x: 8.5, y: 3, z: -25}
 async function createTrapDoorParts(groupMesh, compoundShape) {
     let material = new THREE.MeshStandardMaterial({color: colorScheme.pink, transparent: true, opacity: 1});
 
-    let pillarGeometry = new THREE.BoxGeometry(.4, 4, .4);
+    let pillarGeometry = new THREE.BoxGeometry(.4, 2.2, .4);
     let pillarMesh = new THREE.Mesh(pillarGeometry, material);
     pillarMesh.castShadow = true;
     pillarMesh.receiveShadow = true;

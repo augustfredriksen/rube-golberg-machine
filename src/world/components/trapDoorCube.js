@@ -3,7 +3,7 @@ import { addMeshToScene, g_camera, g_controls } from "../helpers/myThreeHelper.j
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 
-export function createTrapDoorCube(rotation={x: 0, y: 0, z: 0}, position= {x: 10, y: 7, z: -23.5}) {
+export function createTrapDoorCube(rotation={x: 0, y: 0, z: 0}, position= {x: 10, y: 4, z: -23.5}) {
 	const mass=15;
     const width = 1;
     const height =1;

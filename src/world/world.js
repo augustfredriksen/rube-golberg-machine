@@ -25,7 +25,8 @@ import { createTrapDoorTriangleMesh } from "./components/trapDoor";
 import { createTrapDoorCube } from "./components/trapDoorCube";
 import { createAmmoSpringBoard } from "./components/springBoard";
 import { initializeBoing } from "./helpers/myAudioHelper";
-import { createMultipleBoxes, createMultipleBoxesY } from "./components/boxMaker";
+import { createBoxTriangleMesh, createMultipleBoxes, createMultipleBoxesX, createMultipleBoxesY } from "./components/boxMaker";
+import { createGolfPlane } from "./components/golfPlane";
 
 //Globale variabler:
 let g_clock;
@@ -38,7 +39,6 @@ export async function main() {
 
 	// three:
 	createThreeScene();
-	initializeBoing();
 
 
 	// ammo
@@ -68,6 +68,7 @@ function handleKeyDown(event) {
 }
 
 async function addAmmoSceneObjects() {
+    createGolfPlane();
     createAmmoXZPlane();
 	createGolfCourse();
     await secondFunction();
@@ -113,7 +114,7 @@ async function addAmmoSceneObjects() {
     
     await createTrapDoorTriangleMesh();
 
-	createMultipleBoxesY(10, {x: 7, y: 3, z: 4.5});
+	createMultipleBoxesX(4, 8, {x: 10.5, y: 1.2, z: -6});
 
 
 

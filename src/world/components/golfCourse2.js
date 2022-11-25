@@ -87,7 +87,7 @@ export function createAmmoButton(
 
 	mesh.collisionResponse = async (mesh1) => {
         if(!hasCollided) {
-            let velocityVector = new Ammo.btVector3(0, 0, -25);
+            let velocityVector = new Ammo.btVector3(0, 0, -35);
             let velocityVector2 = new Ammo.btVector3(0, 25, 0); 
             let velocityVector3 = new Ammo.btVector3(0, -1, 0); 
             glassRigidBody.activate(true);
@@ -113,46 +113,10 @@ export function createAmmoButton(
 }
 
 export function createGolfCourse2() {
-	let golfCourse2 = new THREE.Group();
-	let floor = createAmmoCubeShapes({ x: 0, y: 0, z: 0 }, { x: 20, y: 1, z: -22 }, 50, 9, 1, colorScheme.pink);
-	let leftWall = createAmmoCubeShapes({ x: 0, y: 0, z: Math.PI / 2 }, { x: 25, y: 1, z: -22 }, 50, 2, 1, colorScheme.yellow);
-	let rightWall = createAmmoCubeShapes({ x: 0, y: 0, z: Math.PI / 2 }, { x: 15, y: 1, z: -22 }, 50, 2, 1, colorScheme.yellow);
-	
-	let frontWall = createAmmoCubeShapes(
-		{ x: 0, y: Math.PI / 2, z: Math.PI / 2 },
-		{ x: 20, y: 1, z: 3 },
-		11,
-		2,
-		1,
-		colorScheme.yellow
-	);
-	let angledObstacle = createAmmoCubeShapes(
-		{ x: 0, y: 0, z: 0 },
-		{ x: 23, y: 1, z: -15 },
-		7,
-		2,
-		2,
-		colorScheme.yellow
-	);
-	let rightObstacle = createAmmoCubeShapes(
-		{ x: 0, y: Math.PI / 2, z: Math.PI / 2 },
-		{ x: -3, y: 1, z: -22 },
-		5,
-		2,
-		0.5,
-		colorScheme.yellow
-	);
-	let ramp = createAmmoCubeShapes({ x: Math.PI / 10, y: 0, z: 0 }, { x: 0, y: 2, z: -34 }, 6, 1, 0.2, colorScheme.blue);
-	let rampSupport = createAmmoCubeShapes({ x: 0, y: 0, z: 0 }, { x: 0, y: 2, z: -37 }, 0.4, 1, 2, colorScheme.blue);
-	let rampBox = createAmmoCubeShapes({ x: 0, y: 0, z: 0 }, { x: 0, y: 2, z: -39.5 }, 5, 9, 2, colorScheme.pink);
-	let rampObstacleRight = createAmmoCubeShapes({ x: 0, y: 0, z: 0 }, { x: -2.5, y: 1.5, z: -33 }, 1, 4, 1, colorScheme.yellow);
-	let rampObstacleLeft = createAmmoCubeShapes({ x: 0, y: 0, z: 0 }, { x: 2.5, y: 1.5, z: -33 }, 1, 4, 1, colorScheme.yellow);
-	let goal = createTorus({ x: Math.PI / 2, y: 0, z: 0 }, { x: 20, y: 1.5, z: 1 });
-    let startPos = createAmmoCube({x: 0, y: 0, z: 0}, {x: 20, y: 1.5, z: -44});
-	let button = createAmmoButton({ x: 0, y: 0, z: 0 }, { x: 14.15, y: 1.3, z: -23.5 }, .5, .5, .5, colorScheme.blue)
-    return golfCourse2;
+
+	let button = createAmmoButton({ x: 0, y: 0, z: 0 }, { x: 17, y: 1.3, z: -23.5 }, .5, .5, .5, colorScheme.blue)
 }
-export function createAmmoRocket(rotation={x: 0, y: 0, z: 0}, position= {x: 15, y: 2, z: -20}) {
+export function createAmmoRocket(rotation={x: 0, y: 0, z: 0}, position= {x: -3, y: 2, z: -20}) {
 	const mass=15;
     const width = 1;
     const height =2;
@@ -185,7 +149,7 @@ export function createAmmoRocket(rotation={x: 0, y: 0, z: 0}, position= {x: 15, 
     return rigidBody
 }
 
-export function createAmmoGlass(rotation={x: 0, y: 0, z: 0}, position= {x: 10, y: 5, z: -23.5}) {
+export function createAmmoGlass(rotation={x: 0, y: 0, z: 0}, position= {x: 10, y: 4, z: -23.5}) {
 
 const mass = 1;
 const width = 3;
