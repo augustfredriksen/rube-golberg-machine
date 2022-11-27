@@ -130,6 +130,7 @@ input, label {
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
+  margin-bottom: 1rem;
 }
 
 .button-24:hover,
@@ -142,4 +143,3 @@ input, label {
 .button-24:active {
   opacity: .5;
 }
-

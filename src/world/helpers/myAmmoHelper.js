@@ -11,14 +11,6 @@ export const IMPULSE_FORCE = 10;
 export let g_ammoPhysicsWorld;
 export let g_rigidBodies = [];
 
-export const COLLISION_GROUP_PLANE = 1;
-export const COLLISION_GROUP_SPHERE = 2;
-export const COLLISION_GROUP_MOVEABLE = 4;
-export const COLLISION_GROUP_BOX = 8;
-export const COLLISION_GROUP_HINGE_SPHERE = 16;
-export const COLLISION_GROUP_SPRING = 32;
-export const COLLISION_GROUP_P2P = 64;
-
 export function createAmmoWorld(checkCollisions= true) {
 	g_checkCollisions = checkCollisions;
 

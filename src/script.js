@@ -1,24 +1,22 @@
-import './style.css';
-import { main } from './world/world.js'
+import "./style.css";
+import { main } from "./world/world.js";
 export let checked;
 
 //START!
 export async function start() {
-	Ammo().then( async function( AmmoLib ) {
+	Ammo().then(async function (AmmoLib) {
 		Ammo = AmmoLib;
-	    await main();
-	} );
+		await main();
+	});
 }
-document.getElementById("soundCheck").addEventListener("click", function() {
-	if(!checked) {
+document.getElementById("soundCheck").addEventListener("click", function () {
+	if (!checked) {
 		checked = true;
-	}
-	else {
+	} else {
 		checked = false;
 	}
-})
-document.getElementById("startBtn").addEventListener("click", function() {
+});
+document.getElementById("startBtn").addEventListener("click", function () {
 	document.getElementById("startScreen").remove();
 	start();
-})
-
+});

@@ -1,7 +1,6 @@
 
 import * as THREE from "three";
 import  {RGBELoader}  from "three/examples/jsm/loaders/RGBELoader"
-import { colorScheme } from "../../../static/colorScheme";
 
 export async function createMaterials(color = "#CFCAE6") {
     const textureLoader = new THREE.TextureLoader();

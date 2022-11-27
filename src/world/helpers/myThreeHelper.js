@@ -4,10 +4,9 @@ https://source.coderefinery.org/3d/threejs_std/-/blob/main/src/del4/ammoShapes2/
 */
 
 import * as THREE from "three";
-import GUI from "lil-gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-export let g_scene, g_renderer, g_camera, g_controls, g_lilGui, g_store, g_sounds;
+export let g_scene, g_renderer, g_camera, g_controls, g_store, g_sounds;
 
 
 export function createThreeScene() {
@@ -25,9 +24,6 @@ export function createThreeScene() {
 	// Scene
 	g_scene = new THREE.Scene();
 	g_scene.background = new THREE.Color(0xdddddd);
-
-	// lil-gui kontroller:
-	g_lilGui = new GUI();
 
 	// Sceneobjekter
 	//await addSceneObjects();
@@ -56,10 +52,6 @@ export function addLights() {
 	let ambientLight1 = new THREE.HemisphereLight(0xdddddd, 0xa8a8f8, 0.7);
 	ambientLight1.visible = true;
 	g_scene.add(ambientLight1);
-	const ambientFolder = g_lilGui.addFolder("Ambient Light");
-	ambientFolder.add(ambientLight1, "visible").name("On/Off");
-	ambientFolder.add(ambientLight1, "intensity").min(0).max(1).step(0.01).name("Intensity");
-	ambientFolder.addColor(ambientLight1, "color").name("Color");
 
 	//** RETNINGSORIENTERT LYS (som gir skygge):
 	let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
@@ -85,11 +77,6 @@ export function addLights() {
 
 	g_scene.add(directionalLightCameraHelper);
 
-	//lil-gui:
-	const directionalFolder = g_lilGui.addFolder("Directional Light");
-	directionalFolder.add(directionalLight, "visible").name("On/Off");
-	directionalFolder.add(directionalLight, "intensity").min(0).max(1).step(0.01).name("Intensity");
-	directionalFolder.addColor(directionalLight, "color").name("Color");
 }
 
 //Sjekker tastaturet:

@@ -1,16 +1,14 @@
 import * as THREE from "three";
 import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
-import { colorScheme } from "../../../static/colorScheme.js";
 import { intializeBrick, intializeDomino } from "../helpers/myAudioHelper.js";
-import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
 import { createMaterials } from "../helpers/materials.js";
 
 export async function createAmmoBox(width, height, depth, mass, position = { x: 0, y: 0, z: 0 }) {
 	let hasCollided = false;
 	// THREE:
-    let geometry = new THREE.BoxGeometry(width, height, depth, 1, 1);
-    const materials = await createMaterials();
+	let geometry = new THREE.BoxGeometry(width, height, depth, 1, 1);
+	const materials = await createMaterials();
 
 	let mesh = new THREE.Mesh(geometry, materials.brickMaterial);
 	mesh.position.set(position.x, position.y, position.z);
@@ -33,7 +31,7 @@ export async function createAmmoBox(width, height, depth, mass, position = { x: 
 
 	mesh.collisionResponse = (mesh1) => {
 		if (!hasCollided) {
-            console.log("firkant traff murstein")
+			console.log("firkant traff murstein");
 			intializeBrick();
 			rigidBody.setGravity(new Ammo.btVector3(0, -(9.80665 * 2), 0));
 			hasCollided = true;
@@ -45,6 +43,7 @@ export async function createAmmoBox(width, height, depth, mass, position = { x: 
 	rigidBody.setGravity(new Ammo.btVector3(0, -(9.80665 * 3), 0));
 }
 
+//Inspirert av https://threejs.org/examples/physics_ammo_cloth.html
 export function createMultipleBoxesX(rowWidth, rowHeight, position = { x: 0, y: 0, z: 0 }) {
 	let mass = 0.5;
 	let width = 1.2;
