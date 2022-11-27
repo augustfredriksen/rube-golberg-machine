@@ -5,7 +5,7 @@ import { createMaterials } from "../helpers/materials.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { initializeBoing } from "../helpers/myAudioHelper.js";
-import { createCustomThing } from "./finish.js";
+import { create3dText, createCustomThing } from "./finish.js";
 
 export async function createGoalTriangleMesh(position={x: 10, y: 1, z: 3}) {
 
@@ -64,7 +64,7 @@ async function createGoalParts(groupMesh, compoundShape) {
 
 function createBottomGoal(position = {x: 10, y: -5, z: 13}) {
     let isCollided = false;
-	const mass=20;
+	const mass=15;
 	// THREE:
 	let geometry = new THREE.BoxGeometry( 18, 1, 18, 1, 1 );
 	let material = new THREE.MeshStandardMaterial( { color: colorScheme.pink, side: THREE.DoubleSide } );
@@ -87,8 +87,12 @@ function createBottomGoal(position = {x: 10, y: -5, z: 13}) {
 
     mesh.collisionResponse = (mesh1) => {
         if(!isCollided) {
-            g_camera.position.set(10, 2, 5)
-            g_controls.target = mesh1.position
+            setTimeout(() => {
+            g_camera.position.set(9, 10, 0)
+            g_controls.target = new THREE.Vector3(10, -5, 13);
+            }, 500);
+            g_controls.maxDistance = 50;
+            create3dText();
             for(let i = 0; i < 25; i++) {
                 createCustomThing(Math.random(), {x: Math.random()*(19 - 1) + 1, y: -7, z: Math.random()*(22 - 4) + 4});
             }

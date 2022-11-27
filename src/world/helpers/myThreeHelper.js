@@ -46,7 +46,7 @@ export function createThreeScene() {
 	g_controls.dampingFactor = 0.2;
 	g_controls.minDistance = 10;
 	g_controls.maxDistance = 50;
-	g_controls.target = new THREE.Vector3(0, 10, -25);
+	g_controls.target = new THREE.Vector3(5, 10, -25);
 	g_controls.addEventListener("change", renderScene);
 
 }

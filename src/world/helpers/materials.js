@@ -1,3 +1,4 @@
+
 import * as THREE from "three";
 import  {RGBELoader}  from "three/examples/jsm/loaders/RGBELoader"
 import { colorScheme } from "../../../static/colorScheme";
@@ -142,6 +143,12 @@ export async function createMaterials(color = "#CFCAE6") {
             glassMaterial.displacementScale = -0.01
             glassMaterial.premultipliedAlpha = true;
 
+            const threeTone = textureLoader.load(("assets/gradientmaps/threeTone.jpg"))
+            const textMaterial = new THREE.MeshToonMaterial()
+            textMaterial.gradientMap = threeTone;
+            textMaterial.color = new THREE.Color(0.0, 0.4, 0.2);
+            textMaterial.flatShading = true;
+
 
 
     
@@ -153,5 +160,6 @@ export async function createMaterials(color = "#CFCAE6") {
         metalMaterial,
         basicMaterial,
         glassMaterial,
+        textMaterial,
     }
 }

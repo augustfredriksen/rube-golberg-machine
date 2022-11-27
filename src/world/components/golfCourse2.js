@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { addMeshToScene, getRigidBodyFromMesh } from "../helpers/myThreeHelper.js";
+import { addMeshToScene, getRigidBodyFromMesh, g_camera, g_controls } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createAmmoRamp } from "./ramp.js";
@@ -98,6 +98,11 @@ export function createAmmoButton(
             cubeRigidBody.activate(true);
             mesh1.material.color.setHex( 0xff0000);
             intializeButton();
+			setTimeout(() => {
+				g_camera.position.set(18, 7, -35);
+				g_controls.maxDistance = 15;
+			g_controls.target = cube.threeMesh.position
+			}, 500);
             hasCollided = true;
         }
 

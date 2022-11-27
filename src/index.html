@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start</title>
+    <title>Prosjektoppgave</title>
 </head>
-<div style="top:0px; left:15px; width:100%; text-align:left; color:black;" class="ui">
-    <h1>Rube Goldberg Machine</h1>
-</div>
+<script src="script.js"></script>
+
+
 <body>
+
+
 <script src="../static/lib/ammo/ammo.js"></script>
 
 <script type="x-shader/x-vertex" id="vertexshader">
@@ -40,6 +42,14 @@
         gl_FragColor = vColor * vRandomValue;
     }
 </script>
+<div class="flex" id="startScreen">
+    <button class="button-24" id="startBtn">Start Scene</button>
+    <div>
+        <label for="soundCheck">Sound</label>
+        <input type="checkbox" id="soundCheck" value="true">
+    </div>
+
+</div>
 
 </body>
 </html>

@@ -3,6 +3,8 @@ import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { createMaterials } from "../helpers/materials.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
+import {FontLoader} from "three/examples/jsm/loaders/FontLoader.js";
+import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry"
 
 export async function createGolfCourseTriangleMesh(position={x: 0, y: 1, z: -22}) {
     const mass = 0;
@@ -44,6 +46,27 @@ async function createGolfCourseParts(groupMesh, compoundShape) {
     wallMeshLeft.position.set(4.5, wallMeshRight.position.y, wallMeshRight.position.z);
     groupMesh.add(wallMeshLeft);
     createConvexTriangleShapeAddToCompound(compoundShape, wallMeshLeft);
+
+    const loader = new FontLoader();
+    loader.load("fonts/gentilis.json", async (font) => {
+        const geometry = new TextGeometry("Rube Goldberg Machine", {
+            font: font,
+            size: 1.2,
+            height: 0.3,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.1,
+            bevelSize: 0.05,
+            bevelOffset: 0.01,
+            bevelSegments: 2,
+        });
+        let textMesh = new THREE.Mesh(geometry, materials.textMaterial);
+        textMesh.receiveShadow = true;
+        textMesh.castShadow = true;
+        textMesh.position.set(wallMeshLeft.position.x, wallMeshLeft.position.y+wallMeshLeft.geometry.parameters.height/2, wallMeshLeft.position.z);
+        textMesh.rotateY(-Math.PI/2);
+        groupMesh.add(textMesh)
+    });
 
 
     let shortWallGeometry = new THREE.BoxGeometry(9, 2, 1);

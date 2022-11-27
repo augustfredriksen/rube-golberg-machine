@@ -41,7 +41,7 @@ export async function createAmmoSpringBoard(width = 1, length = .1, depth = 3, m
             sphereRigidBody.setLinearVelocity(new Ammo.btVector3(0, 10, 0));
             isCollided = true;
             setTimeout(() => {
-                g_camera.position.x = 30;
+                g_camera.position.x = 35;
             }, 500);
     
         }

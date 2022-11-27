@@ -24,7 +24,7 @@ import { createBoxTriangleMesh, createMultipleBoxes, createMultipleBoxesX, creat
 import { createGolfPlane } from "./components/golfPlane";
 import { createSkyBox } from "./components/skyBox";
 import { createGoalTriangleMesh } from "./components/goal";
-import { createCustomThing } from "./components/finish";
+import { create3dText, createCustomThing } from "./components/finish";
 
 //Globale variabler:
 let g_clock;
@@ -42,7 +42,7 @@ export async function main() {
 	// ammo
 	createAmmoWorld(true); //<<=== MERK!
 	// three/ammo-objekter:
-	addAmmoSceneObjects();
+	await addAmmoSceneObjects();
 
 	// Klokke for animasjon
 	g_clock = new THREE.Clock();

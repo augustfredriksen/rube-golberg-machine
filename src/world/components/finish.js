@@ -1,11 +1,8 @@
 import * as THREE from "three";
 import { addMeshToScene } from "../helpers/myThreeHelper.js";
-import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
-import { colorScheme } from "../../../static/colorScheme.js";
-import { intializeBrick, intializeDomino } from "../helpers/myAudioHelper.js";
-import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
+import {FontLoader} from "three/examples/jsm/loaders/FontLoader.js";
+import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry"
 import { createMaterials } from "../helpers/materials.js";
-
 export async function createCustomThing(radius = 5, position = { x: 0, y: 0, z: 0 }) {
 	let hasCollided = false;
     let clock = new THREE.Clock();
@@ -48,11 +45,6 @@ export async function createCustomThing(radius = 5, position = { x: 0, y: 0, z: 
             gl_Position = projectionMatrix * modelViewMatrix * result;
         }`,
         fragmentShader: `
-        float random (vec2 st) {
-            return fract(sin(dot(st.xy,
-                                 vec2(12.9898,78.233)))*
-                43758.5453123);
-        }
         uniform float u_time;
         varying vec3 pos;
         void main() {
@@ -72,4 +64,26 @@ export async function createCustomThing(radius = 5, position = { x: 0, y: 0, z: 
 	mesh.castShadow = true;
 	mesh.name = "finish";
     addMeshToScene(mesh);
+}
+
+export async function create3dText() {
+    let materials = await createMaterials();
+    const loader = new FontLoader();
+    loader.load("fonts/gentilis.json", async (font) => {
+        const geometry = new TextGeometry("Avslutning!", {
+            font: font,
+            size: 1.5,
+            height: 0.3,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.05,
+            bevelSize: 0.03,
+            bevelOffset: 0.01,
+            bevelSegments: 5,
+        });
+        geometry.rotateY(Math.PI)
+        let mesh = new THREE.Mesh(geometry, materials.textMaterial);
+        mesh.position.set(15, -4, 22)
+        addMeshToScene(mesh);
+    })
 }
