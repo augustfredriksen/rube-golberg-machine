@@ -5,7 +5,6 @@ import { colorScheme } from "../../../static/colorScheme.js";
 import { createAmmoRamp } from "./ramp.js";
 import { createAmmoCone } from "./cone.js";
 import { createTorus } from "./torus.js";
-import { createAmmoCube } from "./cube.js";
 import { createAmmoSeesawSphere, sphereRigidBody } from "./seesaw.js";
 import { createTrapDoorCube } from "./trapDoorCube.js";
 import { intializeButton } from "../helpers/myAudioHelper.js";
@@ -114,7 +113,7 @@ export function createAmmoButton(
 
 export function createGolfCourse2() {
 
-	let button = createAmmoButton({ x: 0, y: 0, z: 0 }, { x: 17, y: 1.3, z: -23.5 }, .5, .5, .5, colorScheme.blue)
+	let button = createAmmoButton({ x: 0, y: 0, z: 0 }, { x: 21, y: 1.3, z: -23.5 }, .5, .5, .5, colorScheme.blue)
 }
 export function createAmmoRocket(rotation={x: 0, y: 0, z: 0}, position= {x: -3, y: 2, z: -20}) {
 	const mass=15;
@@ -123,7 +122,7 @@ export function createAmmoRocket(rotation={x: 0, y: 0, z: 0}, position= {x: -3, 
     const depth = 1;
 	// THREE:
 	let geometry = new THREE.BoxGeometry( width, height, depth );
-	let material = new THREE.MeshStandardMaterial( { color: colorScheme.yellow, side: THREE.DoubleSide } );
+	let material = new THREE.MeshStandardMaterial( { color: "brown", side: THREE.DoubleSide } );
 	let mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);

@@ -4,6 +4,7 @@ import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpe
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
 import { intializeDrop } from "../helpers/myAudioHelper.js";
+import { createMaterials } from "../helpers/materials.js";
 
 export async function createHingedSphere() {
     const sphere = createSphere();
@@ -118,9 +119,20 @@ function createAnchor(position={x: 0, y: 5.2, z:-40}) {
     }
 
     async function createSwingParts(groupMesh, compoundShape) {
-        let pillarGeometry = new THREE.BoxGeometry(.5, 5, .5);
-        let material = new THREE.MeshStandardMaterial({color: colorScheme.pink, transparent: true, opacity: 1});
-        let pillarMesh = new THREE.Mesh(pillarGeometry, material);
+        let materials = await createMaterials();
+        let pillarDetailGeometry = new THREE.CylinderGeometry(.5, .5, 0.5);
+        let pillarDetailMesh = new THREE.Mesh(pillarDetailGeometry, materials.metalMaterial);
+        pillarDetailMesh.receiveShadow = true;
+        pillarDetailMesh.castShadow = true;
+        pillarDetailMesh.position.y = -1.5;
+        groupMesh.add(pillarDetailMesh);
+
+        let pillarDetailMesh2 = pillarDetailMesh.clone();
+        pillarDetailMesh2.position.x = -5;
+        groupMesh.add(pillarDetailMesh2);
+        let pillarGeometry = new THREE.CylinderGeometry(.25, .25, 5);
+        let material = new THREE.MeshStandardMaterial({color: colorScheme.yellow, transparent: true, opacity: 1});
+        let pillarMesh = new THREE.Mesh(pillarGeometry, materials.metalMaterial);
         pillarMesh.castShadow = true;
         pillarMesh.receiveShadow = true;
         pillarMesh.name = "pillar";
@@ -132,38 +144,8 @@ function createAnchor(position={x: 0, y: 5.2, z:-40}) {
         groupMesh.add(pillarMesh2);
         createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh2);
 
-        let pillarMesh3 = pillarMesh.clone();
-        pillarMesh3.position.set(-3.5, 0, 7);
-        groupMesh.add(pillarMesh3);
-        createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh3);
-
-        let pillarMesh4 = pillarMesh.clone();
-        pillarMesh4.position.set(-1.5, 0, 7);
-        groupMesh.add(pillarMesh4);
-        createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh4);
-
-        let pillarMesh5 = pillarMesh.clone();
-        pillarMesh5.position.set(-3.5, 0, 23);
-        groupMesh.add(pillarMesh5);
-        createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh5);
-
-        let pillarMesh6 = pillarMesh.clone();
-        pillarMesh6.position.set(-1.5, 0, 23);
-        groupMesh.add(pillarMesh6);
-        createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh6);
-
-        let pillarMesh7 = pillarMesh.clone();
-        pillarMesh7.position.set(-3.5, 0, 17);
-        groupMesh.add(pillarMesh7);
-        createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh7);
-
-        let pillarMesh8 = pillarMesh.clone();
-        pillarMesh8.position.set(-1.5, 0, 17);
-        groupMesh.add(pillarMesh8);
-        createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh8);
-
         let topGeometry = new THREE.BoxGeometry(6, .5, 1);
-        let topMesh = new THREE.Mesh(topGeometry, material);
+        let topMesh = new THREE.Mesh(topGeometry, materials.metalMaterial);
         topMesh.castShadow = true;
         topMesh.receiveShadow = true;
         topMesh.name = "top";
@@ -171,32 +153,37 @@ function createAnchor(position={x: 0, y: 5.2, z:-40}) {
         groupMesh.add(topMesh);
         createConvexTriangleShapeAddToCompound(compoundShape, topMesh);
 
-        let roofGeometry = new THREE.BoxGeometry(3, .5, 10);
-        let roofMesh = new THREE.Mesh(roofGeometry, material);
+        let roofGeometry = new THREE.BoxGeometry(1, .5, 3);
+        let roofMesh = new THREE.Mesh(roofGeometry, materials.metalMaterial);
         roofMesh.castShadow = true;
         roofMesh.receiveShadow = true;
         roofMesh.name = "roof";
-        roofMesh.position.set(pillarMesh2.position.x/2, pillarMesh.geometry.parameters.height/2, roofMesh.geometry.parameters.depth/2);
+        roofMesh.position.set(pillarMesh2.position.x/2, pillarMesh.geometry.parameters.height/2, roofMesh.geometry.parameters.depth/1.5);
         groupMesh.add(roofMesh);
         createConvexTriangleShapeAddToCompound(compoundShape, roofMesh);
 
-        let roofMiddleGeometry = new THREE.BoxGeometry(.5, .5, 10);
-        let roofMiddleMesh = new THREE.Mesh(roofMiddleGeometry, material);
-        roofMiddleMesh.castShadow = true;
-        roofMiddleMesh.receiveShadow = true;
-        roofMiddleMesh.name = "roof";
-        roofMiddleMesh.position.set(roofMesh.position.x/2, pillarMesh.geometry.parameters.height/2, roofMesh.geometry.parameters.depth);
-        groupMesh.add(roofMiddleMesh);
-        createConvexTriangleShapeAddToCompound(compoundShape, roofMiddleMesh);
-
-        let roofMiddleMesh2 = roofMiddleMesh.clone();
-        roofMiddleMesh2.position.x = roofMiddleMesh.position.x*3;
-        groupMesh.add(roofMiddleMesh2);
-        createConvexTriangleShapeAddToCompound(compoundShape, roofMiddleMesh2);
-
         let roofMesh2 = roofMesh.clone();
-        roofMesh2.position.set(pillarMesh2.position.x/2, pillarMesh.geometry.parameters.height/2, roofMiddleMesh.geometry.parameters.depth*2);
+        roofMesh2.position.set(pillarMesh2.position.x/2, pillarMesh.geometry.parameters.height/2, roofMesh.geometry.parameters.depth*5.5);
         groupMesh.add(roofMesh2);
         createConvexTriangleShapeAddToCompound(compoundShape, roofMesh2);
-        
+
+        let roofSupportGeometry = new THREE.CylinderGeometry(.15, .15, 4);
+        roofSupportGeometry.rotateZ(Math.PI/2);
+        let roofSupportMesh = new THREE.Mesh(roofSupportGeometry, materials.metalMaterial);
+        roofSupportMesh.position.set(-roofMesh2.geometry.parameters.width*5, pillarMesh.geometry.parameters.height/2, roofMesh2.position.z);
+        groupMesh.add(roofSupportMesh);
+
+        let roofSupportSphereGeometry = new THREE.SphereGeometry(.33);
+        let roofSupportSphereMesh = new THREE.Mesh(roofSupportSphereGeometry, materials.metalMaterial);
+        roofSupportSphereMesh.position.set(roofSupportMesh.position.x*1.4, roofSupportMesh.position.y, roofSupportMesh.position.z);
+        groupMesh.add(roofSupportSphereMesh);
+
+        let roofSupportGeometry2 = new THREE.CylinderGeometry(.15, .15, 5);
+        let roofSupportMesh2 = new THREE.Mesh(roofSupportGeometry2, materials.metalMaterial);
+        roofSupportMesh2.position.set(roofSupportSphereMesh.position.x, pillarMesh.geometry.parameters.height/2 - roofSupportMesh2.geometry.parameters.height/2, roofMesh2.position.z);
+        groupMesh.add(roofSupportMesh2);
+
+        let pillarDetailMesh3 = pillarDetailMesh.clone();
+        pillarDetailMesh3.position.set(-7, -2, 16.5)
+        groupMesh.add(pillarDetailMesh3);
     }

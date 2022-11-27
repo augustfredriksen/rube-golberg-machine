@@ -3,6 +3,7 @@ import { addMeshToScene, g_camera, g_controls } from "../helpers/myThreeHelper.j
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
+import { createMaterials } from "../helpers/materials.js";
 
 export async function createTrapDoorTriangleMesh(position={x: 8.5, y: 2, z: -25}) {
     const mass = 0;
@@ -23,7 +24,8 @@ export async function createTrapDoorTriangleMesh(position={x: 8.5, y: 2, z: -25}
 }
 
 async function createTrapDoorParts(groupMesh, compoundShape) {
-    let material = new THREE.MeshStandardMaterial({color: colorScheme.pink, transparent: true, opacity: 1});
+    const materials = await createMaterials();
+    let material = materials.fabricMaterial;
 
     let pillarGeometry = new THREE.BoxGeometry(.4, 2.2, .4);
     let pillarMesh = new THREE.Mesh(pillarGeometry, material);
@@ -50,6 +52,12 @@ async function createTrapDoorParts(groupMesh, compoundShape) {
     pillarMesh4.position.set(pillarMesh.position.x + 3, pillarMesh.position.y, pillarMesh.position.z + 3)
     groupMesh.add(pillarMesh4);
     createConvexTriangleShapeAddToCompound(compoundShape, pillarMesh4);
+
+    let pillarMesh5 = pillarMesh4.clone();
+    pillarMesh5.position.x = 3.5;
+    pillarMesh5.position.y = -0.5;
+    pillarMesh5.scale.set(1, .5, 1);
+    groupMesh.add(pillarMesh5);
 
     let topGeometry = new THREE.BoxGeometry(3, .4, .4);
     let topMesh = new THREE.Mesh(topGeometry, material);

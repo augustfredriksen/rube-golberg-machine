@@ -3,13 +3,15 @@ import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { intializeSpringBoard } from "../helpers/myAudioHelper.js";
+import { createMaterials } from "../helpers/materials.js";
 
 
-export function createAmmoRamp(width, length, depth, mass ,rotation={x: Math.PI/10, y: 0, z: 0}, position= {x: 0, y: 2, z: -40}) {
+export async function createAmmoRamp(width, length, depth, mass ,rotation={x: Math.PI/10, y: 0, z: 0}, position= {x: 0, y: 2, z: -40}) {
+	let materials = await createMaterials();
 	let isCollided = false;
     let geometry = new THREE.BoxGeometry(width, length, depth);
 	let material = new THREE.MeshStandardMaterial( { color: colorScheme.blue, side: THREE.DoubleSide } );
-	let mesh = new THREE.Mesh(geometry, material);
+	let mesh = new THREE.Mesh(geometry, materials.basicMaterial);
     mesh.position.set(position.x, position.y, position.z);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 

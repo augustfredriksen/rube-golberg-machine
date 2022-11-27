@@ -7,6 +7,7 @@ export function initializeBoing() {
 	const sound = new THREE.Audio(listener);
 	const loader = new THREE.AudioLoader();
 	loader.load('assets/sounds/Boing.mp3', (buffer) => {
+        sound.duration = 60;
 		sound.setBuffer(buffer);
 		sound.setVolume(.5);
 		sound.play();
@@ -124,6 +125,18 @@ export function intializeSwingDoor() {
 	loader.load('assets/sounds/swingdoor.mp3', (buffer) => {
 		sound.setBuffer(buffer);
 		sound.setVolume(.5);
+		sound.play();
+	})
+}
+
+export function intializeBrick() {
+	const listener = new THREE.AudioListener();
+	g_camera.add(listener);
+	const sound = new THREE.Audio(listener);
+	const loader = new THREE.AudioLoader();
+	loader.load('assets/sounds/brick.mp3', (buffer) => {
+		sound.setBuffer(buffer);
+		sound.setVolume(.10);
 		sound.play();
 	})
 }

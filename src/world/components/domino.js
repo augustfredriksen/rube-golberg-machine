@@ -11,8 +11,8 @@ export function createAmmoDomino(rotation = {x: 0, y: 0, z: 0}, position= {x: 0,
     const height = 1.2;
     const depth = 0.15;
 	// THREE:
-	let geometry = new THREE.BoxGeometry( width, height, depth, 1, 1 );
-	let material = new THREE.MeshStandardMaterial( { color: colorScheme.gray, side: THREE.DoubleSide } );
+	let geometry = new THREE.BoxGeometry( width, height, depth, 4, 4 );
+	let material = new THREE.MeshStandardMaterial( { color: 0xffffff * Math.random(), side: THREE.DoubleSide, flatShading: true } );
 	let mesh = new THREE.Mesh(geometry, material);
     mesh.rotation.set(rotation.x, rotation.y, rotation.z);
     mesh.position.set(position.x, position.y, position.z);
@@ -69,7 +69,7 @@ export function createHalfCircleDominoZ(radius, steps, centerX, centerZ) {
         zValues[i] = (centerZ + radius * Math.cos(Math.PI * i / steps-Math.PI/2));
         createAmmoDomino(
             {x: 0, y: Math.PI + i*Math.PI/steps, z: 0},
-            {x: xValues[i], y: 0, z: zValues[i]}
+            {x: xValues[i], y: 1.3, z: zValues[i]}
             )
     }
 }
@@ -82,7 +82,7 @@ export function createInverseHalfCircleDominoZ(radius, steps, centerX, centerZ) 
         zValues[i] = (centerZ + radius * Math.cos(Math.PI * i / steps-Math.PI/2));
         createAmmoDomino(
             {x: 0, y: Math.PI - i*Math.PI/steps, z: 0},
-            {x: xValues[i], y: 0, z: -zValues[i]}
+            {x: xValues[i], y: 1.2, z: -zValues[i]}
             )
     }
 }
@@ -95,7 +95,7 @@ export function createHalfCircleDominoX(radius, steps, centerX, centerZ) {
         zValues[i] = (centerZ + radius * Math.sin(Math.PI * i / steps-Math.PI/2));
         createAmmoDomino(
             {x: 0, y: Math.PI/2 - i*Math.PI/180, z: 0},
-            {x: xValues[i], y: 0, z: zValues[i]}
+            {x: xValues[i], y: 1.3, z: zValues[i]}
             )};
 }
 

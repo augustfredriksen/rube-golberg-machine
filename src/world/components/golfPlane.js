@@ -5,7 +5,6 @@ import { colorScheme } from "../../../static/colorScheme.js";
 import { createAmmoRamp } from "./ramp.js";
 import { createAmmoCone } from "./cone.js";
 import { createTorus } from "./torus.js";
-import { createAmmoCube } from "./cube.js";
 import { createMaterials } from "../helpers/materials.js";
 
 export async function createGolfPlane() {

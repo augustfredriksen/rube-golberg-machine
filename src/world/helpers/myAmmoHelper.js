@@ -139,6 +139,24 @@ function checkCollisions(deltaTime) {
 							if (typeof threeMesh1.collisionResponse === 'function')
 								threeMesh1.collisionResponse(threeMesh1);
 						}
+
+						if ((threeMesh0.name === 'trap_door_cube' && threeMesh1.name === 'brick') ||
+							threeMesh1.name === 'brick' && threeMesh0.name === 'trap_door_cube') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+						}
+
+						if ((threeMesh0.name === 'bottom_goal' && threeMesh1.name === 'brick') ||
+							threeMesh1.name === 'brick' && threeMesh0.name === 'bottom_goal') {
+
+							if (typeof threeMesh0.collisionResponse === 'function')
+								threeMesh0.collisionResponse(threeMesh0);
+							if (typeof threeMesh1.collisionResponse === 'function')
+								threeMesh1.collisionResponse(threeMesh1);
+						}
 						if ((threeMesh0.name === 'golf_course_2' && threeMesh1.name === 'seesawSphere') ||
 						threeMesh1.name === 'seesawSphere' && threeMesh0.name === 'golf_course_2') {
 

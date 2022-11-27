@@ -130,7 +130,7 @@ function createAnchor(position={x: .1806, y: 11.8, z:-1}) {
 	//THREE
 	const mesh = new THREE.Mesh(
 		new THREE.SphereGeometry(radius, 32, 32),
-		new THREE.MeshStandardMaterial({color: 0xb846db, transparent: true, opacity: 0.5}));
+		new THREE.MeshStandardMaterial({color: 0xff0000, transparent: true, opacity: 0.0}));
 	mesh.name = 'hinge_anchor';
 	mesh.position.set(position.x, position.y, position.z);
 	mesh.castShadow = true;

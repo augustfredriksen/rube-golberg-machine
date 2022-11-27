@@ -1,7 +1,26 @@
 import * as THREE from "three";
+import  {RGBELoader}  from "three/examples/jsm/loaders/RGBELoader"
+import { colorScheme } from "../../../static/colorScheme";
 
-export async function createMaterials() {
+export async function createMaterials(color = "#CFCAE6") {
     const textureLoader = new THREE.TextureLoader();
+
+    const imagePrefix = "assets/cubemaps/";
+    const directions = ["px", "nx", "py", "ny", "pz", "nz"];
+    const imageSuffix = ".png";
+    let materialArray = [];
+    for (let i = 0; i < 6; i++) {
+        materialArray.push(new THREE.MeshBasicMaterial({
+            map: textureLoader.load(imagePrefix + directions[i] + imageSuffix),
+            side: THREE.BackSide
+        }))
+    }
+
+    const hdrEquirect = new RGBELoader().load(
+        "assets/envmaps/grass.hdr", () => {
+            hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
+        });
+
     const fabricTexture = textureLoader.load("assets/textures/fabric/fabric.jpg");
     fabricTexture.wrapS = THREE.RepeatWrapping;
     fabricTexture.wrapT = THREE.RepeatWrapping;
@@ -21,26 +40,26 @@ export async function createMaterials() {
          const woodTexture = textureLoader.load("assets/textures/wood/wood.jpg");
          woodTexture.wrapT = THREE.RepeatWrapping;
          woodTexture.wrapS = THREE.RepeatWrapping;
-         woodTexture.repeat.set(1,1);
-         const woodNormalTexture = textureLoader.load("assets/textures/sand/sand_normal.jpg");
+         woodTexture.repeat.set(2,2);
+         const woodNormalTexture = textureLoader.load("assets/textures/fabric/fabric_normal.jpg");
          woodNormalTexture.wrapS = THREE.RepeatWrapping;
          woodNormalTexture.wrapT = THREE.RepeatWrapping;
-         woodNormalTexture.repeat.set(1,1);
-         let woodMaterial = new THREE.MeshStandardMaterial( {
-            //normalMap: woodNormalTexture,
+         woodNormalTexture.repeat.set(.5,.5);
+         let woodMaterial = new THREE.MeshPhysicalMaterial( {
+            normalMap: woodNormalTexture,
             clearcoatNormalMap: woodNormalTexture,
             flatShading: true,
-            transparent: true,
-            opacity: 1,
-            color: new THREE.Color(1.2, 0.5, 0),
+            color: new THREE.Color(color),
             roughness: 0.1,
             metalness: 0.1,
             transmission: 1,
             thickness: 1.2,
-            clearcoat: 1,
-            clearcoatRoughness: 0.1,
-            normalScale: new THREE.Vector2(1, 1),
-            clearcoatNormalScale: new THREE.Vector2(0.3, 0.3)
+            clearcoat: 0.5,
+            clearcoatRoughness: 0.5,
+            normalScale: new THREE.Vector2(2, 2),
+            clearcoatNormalScale: new THREE.Vector2(0.3, 0.3),
+            envMap: hdrEquirect,
+            envMapIntensity: 1
               });
 
               const brickNormalMapTexture = textureLoader.load("assets/textures/brick/bricks_normalmap.jpg");
@@ -60,15 +79,79 @@ export async function createMaterials() {
                   clearcoat: 1,
                   clearcoatRoughness: 0.1,
                   normalScale: new THREE.Vector2(6, 6),
-                  clearcoatNormalScale: new THREE.Vector2(0.3, 0.3)
+                  clearcoatNormalScale: new THREE.Vector2(0.3, 0.3),
+                  envMap: hdrEquirect,
+                  envMapIntensity: 0.5
               });
               brickMaterial.displacementScale = -0.01
               brickMaterial.premultipliedAlpha = true;
+
+              const metalTexture = textureLoader.load("assets/textures/metal/metal.jpg");
+              metalTexture.wrapT = THREE.RepeatWrapping;
+              metalTexture.wrapS = THREE.RepeatWrapping;
+              metalTexture.repeat.set(15,15);
+
+              const metalNormalMapTexture = textureLoader.load("assets/textures/metal/metal_normal.jpg");
+              metalNormalMapTexture.wrapS = THREE.RepeatWrapping;
+              metalNormalMapTexture.wrapT = THREE.RepeatWrapping;
+              
+              let metalMaterial = new THREE.MeshPhysicalMaterial({
+                map: metalTexture,
+                  normalMap: metalNormalMapTexture,
+                  clearcoatNormalMap: metalNormalMapTexture,
+                  flatShading: true,
+                  transparent: true,
+                  opacity: 1,
+                  color: new THREE.Color(1, 1, 1),
+                  roughness: 0.8,
+                  metalness: 0.9,
+                  transmission: 1,
+                  thickness: 1.2,
+                  clearcoat: 1,
+                  clearcoatRoughness: 0.1,
+                  normalScale: new THREE.Vector2(6, 6),
+                  clearcoatNormalScale: new THREE.Vector2(0.3, 0.3),
+                  envMap: hdrEquirect,
+                  envMapIntensity: 1
+              });
+              metalMaterial.displacementScale = -0.01
+              metalMaterial.premultipliedAlpha = true;
+
+              let basicMaterial = new THREE.MeshPhongMaterial({
+                color: new THREE.Color(color),
+                flatShading: true,
+              })
+
+
+              let glassMaterial = new THREE.MeshPhysicalMaterial({
+                normalMap: brickNormalMapTexture,
+                clearcoatNormalMap: brickNormalMapTexture,
+                flatShading: true,
+                transparent: true,
+                opacity: 1,
+                roughness: 0.01,
+                transmission: 1,
+                thickness: 1.2,
+                clearcoat: 1,
+                clearcoatRoughness: 0.1,
+                normalScale: new THREE.Vector2(6, 6),
+                clearcoatNormalScale: new THREE.Vector2(0.3, 0.3),
+                envMap: hdrEquirect,
+                envMapIntensity: 0.5
+            });
+            glassMaterial.displacementScale = -0.01
+            glassMaterial.premultipliedAlpha = true;
+
+
 
     
     return {
         fabricMaterial,
         woodMaterial,
-        brickMaterial
+        brickMaterial,
+        materialArray,
+        metalMaterial,
+        basicMaterial,
+        glassMaterial,
     }
 }

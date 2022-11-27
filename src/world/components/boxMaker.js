@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
-import { intializeDomino } from "../helpers/myAudioHelper.js";
+import { intializeBrick, intializeDomino } from "../helpers/myAudioHelper.js";
 import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
 import { createMaterials } from "../helpers/materials.js";
 
@@ -33,7 +33,8 @@ export async function createAmmoBox(width, height, depth, mass, position = { x: 
 
 	mesh.collisionResponse = (mesh1) => {
 		if (!hasCollided) {
-			intializeDomino();
+            console.log("firkant traff murstein")
+			intializeBrick();
 			rigidBody.setGravity(new Ammo.btVector3(0, -(9.80665 * 2), 0));
 			hasCollided = true;
 		}

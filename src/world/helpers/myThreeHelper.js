@@ -35,13 +35,15 @@ export function createThreeScene() {
 
 	// Kamera:
 	g_camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-	g_camera.position.x = 30;
+	g_camera.position.x = -20;
 	g_camera.position.y = 15;
 	g_camera.position.z = -25;
 	console.log(g_camera.position)
 
 	// TrackballControls:
 	g_controls = new OrbitControls(g_camera, g_renderer.domElement);
+	g_controls.enableDamping = true;
+	g_controls.dampingFactor = 0.2;
 	g_controls.minDistance = 10;
 	g_controls.maxDistance = 50;
 	g_controls.target = new THREE.Vector3(0, 10, -25);

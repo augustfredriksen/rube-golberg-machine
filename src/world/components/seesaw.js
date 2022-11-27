@@ -3,6 +3,7 @@ import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { colorScheme } from "../../../static/colorScheme.js";
 import { intializeBing, intializeDrop, intializeSwingBall } from "../helpers/myAudioHelper.js";
+import { createMaterials } from "../helpers/materials.js";
 
 let sphereCollided = false;
 
@@ -39,7 +40,8 @@ export function createAmmoSeesaw(rotation = { x: 0, y: 0, z: 0 }, position = { x
 	rigidBody.threeMesh = mesh;
 }
 
-function createAmmoSeesawPlank(rotation = { x: 0, y: 0, z: 0 }, position = { x: 4, y: 9, z: -23.5 }) {
+async function createAmmoSeesawPlank(rotation = { x: 0, y: 0, z: 0 }, position = { x: 4, y: 9, z: -23.5 }) {
+	const materials = await createMaterials();
 	const mass = 10;
 	const width = 10;
 	const height = .1;
@@ -47,7 +49,7 @@ function createAmmoSeesawPlank(rotation = { x: 0, y: 0, z: 0 }, position = { x: 
 	// THREE:
 	let geometry = new THREE.BoxGeometry(width, height, depth, 1, 1);
 	let material = new THREE.MeshStandardMaterial({ color: colorScheme.blue, side: THREE.DoubleSide, transparent: true, opacity: 0.1 });
-	let mesh = new THREE.Mesh(geometry, material);
+	let mesh = new THREE.Mesh(geometry, materials.glassMaterial);
 	mesh.position.set(position.x, position.y, position.z);
 	mesh.rotation.set(rotation.x, rotation.y, rotation.z);
 

@@ -85,8 +85,8 @@ export function createAmmoGolfBall(rotation={x: 0, y: 0, z: 0}, position= {x: 0,
             rigidBody);
 
             golfBall.collisionResponse = (mesh1) => {
-                    let forceVector = new Ammo.btVector3(0, 0, -10);
-                    rigidBody.applyForce(forceVector);
+                    let velocityVector = new Ammo.btVector3(0, 2, -20);
+                    rigidBody.setLinearVelocity(velocityVector);
             };
     
         addMeshToScene(golfBall);

@@ -1,56 +1,14 @@
 import * as THREE from "three";
 import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
-import { colorScheme } from "../../../static/colorScheme.js";
-import { createAmmoRamp } from "./ramp.js";
-import { createAmmoCone } from "./cone.js";
-import { createTorus } from "./torus.js";
-import { createAmmoCube } from "./cube.js";
 import { createMaterials } from "../helpers/materials.js";
-import { createGolfPlane } from "./golfPlane.js";
+import { createConvexTriangleShapeAddToCompound } from "../helpers/triangleMeshHelper.js";
 
-export function createAmmoCubeShape(
-	rotation={x: 0, y: 0, z: 0},
-	position= {x: 0, y: 0, z: 0},
-	width = 1,
-	length = 1,
-	depth = 1,
-    color = 0xA8A8F8,
-    material,
-	 ) {
-	const mass=0;
-	// THREE:
-
-	let geometry = new THREE.BoxGeometry( length, depth, width, 1, 1 );
-	let mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(position.x, position.y, position.z);
-    mesh.rotation.set(rotation.x, rotation.y, rotation.z);
-
-	mesh.receiveShadow = true;
-    mesh.castShadow = true;
-	mesh.name = 'xzplane';
-
-	// AMMO:
-	let shape = new Ammo.btBoxShape(new Ammo.btVector3(length/2, depth/2, width/2));
-	//shape.setMargin( 0.05 );
-	let rigidBody = createAmmoRigidBody(shape, mesh, 0.7, 0.8, position, mass);
-
-	mesh.userData.physicsBody = rigidBody;
-
-	// Legger til physics world:
-	g_ammoPhysicsWorld.addRigidBody(
-		rigidBody);
-
-	addMeshToScene(mesh);
-	g_rigidBodies.push(mesh);
-	rigidBody.threeMesh = mesh;
-}
-
-export async function createGolfCourseTriangleMesh(position={x: -15, y: 4, z: -25}) {
+export async function createGolfCourseTriangleMesh(position={x: 0, y: 1, z: -22}) {
     const mass = 0;
     let compoundShape = new Ammo.btCompoundShape();
     let groupMesh = new THREE.Group();
-    groupMesh.userData.tag = "swing";
+    groupMesh.userData.tag = "golf_course";
     await createGolfCourseParts(groupMesh, compoundShape);
 
     let rigidBody = createAmmoRigidBody(compoundShape, groupMesh, 0.4, 0.6, position, mass);
@@ -64,74 +22,104 @@ export async function createGolfCourseTriangleMesh(position={x: -15, y: 4, z: -2
     rigidBody.threeMesh = groupMesh;
 }
 
-export async function createGolfCourse() {
+async function createGolfCourseParts(groupMesh, compoundShape) {
     const materials = await createMaterials();
-	createAmmoCubeShape(
-		{x: 0, y: 0, z: 0},
-		{x: 4.5, y: 1, z: -22},
-		50, 1, 2,
-        colorScheme.yellow,
-        materials.woodMaterial
-		);
-	createAmmoCubeShape(
-		{x: 0, y: 0, z: 0},
-		{x: -4.5, y: 1, z: -22},
-		50, 1, 2,
-        colorScheme.yellow,
-        materials.woodMaterial
-		);
-    createAmmoCubeShape(
-        {x: 0, y: Math.PI/2, z: Math.PI/2},
-        {x: 0, y: 1, z: -47},
-        11, 2, 1,
-        colorScheme.yellow
-        );
-    createAmmoCubeShape(
-        {x: 0, y: Math.PI/7, z: Math.PI/2},
-        {x: 3.5, y: 1, z: -15},
-        7, 2, .5,
-        colorScheme.yellow
-        );
-    createAmmoCubeShape(
-        {x: 0, y: Math.PI/2, z: Math.PI/2},
-        {x: -3, y: 1, z: -22},
-        5, 2, .5,
-        colorScheme.yellow
-        );
-    createAmmoCubeShape(
-        {x: Math.PI/10, y: 0, z: 0},
-        {x: 0, y: 2, z: -34},
-        6, 1, .2,
-        colorScheme.blue
-        );
-    createAmmoCubeShape(
-        {x: 0, y: 0, z: 0},
-        {x: 0, y: 2, z: -37},
-        .4, 1, 2,
-        colorScheme.blue
-        );
-    createAmmoCubeShape(
-        {x: 0, y: 0, z: 0},
-        {x: 0, y: 2, z: -39.5},
-        5, 9, 2,
-        colorScheme.pink
-        );
-    createAmmoCubeShape(
-        {x: 0, y: 0, z: 0},
-        {x: -2.5, y: 1.5, z: -33},
-        1, 4, 1,
-        colorScheme.yellow
-        );
-    createAmmoCubeShape(
-        {x: 0, y: 0, z: 0},
-        {x: 2.5, y: 1.5, z: -33},
-        1, 4, 1,
-        colorScheme.yellow
-        );
-    createTorus(
-        {x: Math.PI/2, y: 0, z: 0},
-        {x: 0, y: 1.5, z: -44})
 
-    createAmmoCube();
+    let teeGeometry = new THREE.BoxGeometry(1, 0.4, 4);
+    let teeMesh = new THREE.Mesh(teeGeometry, materials.metalMaterial);
+    teeMesh.position.set(0, 0.4, 25 - teeMesh.geometry.parameters.depth/2);
+    groupMesh.add(teeMesh);
+    createConvexTriangleShapeAddToCompound(compoundShape, teeMesh);
+
+    let wallGeometry = new THREE.BoxGeometry(1, 2, 50);
+    let wallMeshRight = new THREE.Mesh(wallGeometry, materials.metalMaterial);
+    wallMeshRight.position.x = -4.5;
+    wallMeshRight.receiveShadow = true;
+    wallMeshRight.castShadow = true;
+    groupMesh.add(wallMeshRight);
+    createConvexTriangleShapeAddToCompound(compoundShape, wallMeshRight);
+
+
+    let wallMeshLeft = wallMeshRight.clone();
+    wallMeshLeft.position.set(4.5, wallMeshRight.position.y, wallMeshRight.position.z);
+    groupMesh.add(wallMeshLeft);
+    createConvexTriangleShapeAddToCompound(compoundShape, wallMeshLeft);
+
+
+    let shortWallGeometry = new THREE.BoxGeometry(9, 2, 1);
+    let shortWallFrontMesh = new THREE.Mesh(shortWallGeometry, materials.metalMaterial);
+    shortWallFrontMesh.position.set(0, -0.5, 24.5);
+    shortWallFrontMesh.receiveShadow = true;
+    shortWallFrontMesh.castShadow = true;
+    groupMesh.add(shortWallFrontMesh);
+
+    let shortWallBackMesh = shortWallFrontMesh.clone();
+    shortWallBackMesh.position.set(shortWallBackMesh.position.x, shortWallBackMesh.position.y, -shortWallBackMesh.position.z);
+    groupMesh.add(shortWallBackMesh);
+
+    let underPlaneGeometry = new THREE.PlaneGeometry(9, 50);
+    underPlaneGeometry.rotateX(Math.PI/2);
+    let underPlaneMesh = new THREE.Mesh(underPlaneGeometry, materials.fabricMaterial);
+    underPlaneMesh.position.y = -0.5
+    underPlaneMesh.receiveShadow = true;
+    underPlaneMesh.castShadow = true;
+    groupMesh.add(underPlaneMesh);
+
+    let obstacleLeftGeometry = new THREE.BoxGeometry(0.5, 1, 7);
+    obstacleLeftGeometry.rotateY(Math.PI/7);
+    let obstacleLeftMesh = new THREE.Mesh(obstacleLeftGeometry, materials.metalMaterial );
+    obstacleLeftMesh.position.set(3, 0, 10);
+    obstacleLeftMesh.receiveShadow = true;
+    obstacleLeftMesh.castShadow = true;
+    groupMesh.add(obstacleLeftMesh);
+    createConvexTriangleShapeAddToCompound(compoundShape, obstacleLeftMesh);
+
+    let obstacleRightGeometry = new THREE.BoxGeometry(3, 1, 0.5);
+    let obstacleRightMesh = new THREE.Mesh(obstacleRightGeometry, materials.metalMaterial);
+    obstacleRightMesh.position.set(-2.5, -0.25, 5);
+    obstacleRightMesh.receiveShadow = true;
+    obstacleRightMesh.castShadow = true;
+    groupMesh.add(obstacleRightMesh);
+    createConvexTriangleShapeAddToCompound(compoundShape, obstacleRightMesh);
+
+    let rampGeometry = new THREE.BoxGeometry(1, 0.2, 6);
+    rampGeometry.rotateX(Math.PI/10);
+    let rampMesh = new THREE.Mesh(rampGeometry, materials.metalMaterial);
+    rampMesh.position.set(0, 0.5, -9);
+    rampMesh.receiveShadow = true;
+    rampMesh.castShadow = true;
+    groupMesh.add(rampMesh);
+    createConvexTriangleShapeAddToCompound(compoundShape, rampMesh);
+
+    let rampObstacleLeft = new THREE.BoxGeometry(3.5, 2, 1);
+    let rampObstacleLeftMesh = new THREE.Mesh(rampObstacleLeft, materials.woodMaterial);
+    rampObstacleLeftMesh.position.set(2.25, 0, rampMesh.position.z +2);
+    rampObstacleLeftMesh.receiveShadow = true;
+    rampObstacleLeftMesh.castShadow = true;
+    groupMesh.add(rampObstacleLeftMesh);
+    createConvexTriangleShapeAddToCompound(compoundShape, rampObstacleLeftMesh);
+
+    let rampObstacleRightMesh = rampObstacleLeftMesh.clone();
+    rampObstacleRightMesh.position.set(-2.25, 0, rampMesh.position.z +2);
+    groupMesh.add(rampObstacleRightMesh);
+    createConvexTriangleShapeAddToCompound(compoundShape, rampObstacleRightMesh);
+
+    let rampPlatformGeometry = new THREE.BoxGeometry(8, 2, 8);
+    let rampPlatformMesh = new THREE.Mesh(rampPlatformGeometry, materials.woodMaterial);
+    rampPlatformMesh.position.set(0, 0.5, -15.8)
+    rampPlatformMesh.receiveShadow = true;
+    rampPlatformMesh.castShadow = true;
+    groupMesh.add(rampPlatformMesh);
+    createConvexTriangleShapeAddToCompound(compoundShape, rampPlatformMesh);
+
+    const headLight = new THREE.SpotLight(0xffffff, 1, 55, Math.PI*0.2, 0, 0);
+    headLight.position.set(0, 10, 55)
+    headLight.visible = true;
+    headLight.castShadow = true;
+    headLight.shadow.camera.near = .1;
+    headLight.shadow.camera.far = 30;
+    headLight.shadow.mapSize = new THREE.Vector2(1024, 1024);
+    headLight.target = rampMesh;
+    groupMesh.add(headLight);
 }
 
