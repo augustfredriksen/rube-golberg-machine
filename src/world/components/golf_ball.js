@@ -3,6 +3,7 @@ import { addMeshToScene } from "../helpers/myThreeHelper.js";
 import { createAmmoRigidBody, g_ammoPhysicsWorld, g_rigidBodies } from "../helpers/myAmmoHelper.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { startingForceY, startingForceZ } from "../../script.js";
 
 export function createAmmoGolfBall(rotation = { x: 0, y: 0, z: 0 }, position = { x: 0, y: 2, z: 0 }) {
 	const mass = 5;
@@ -31,7 +32,7 @@ export function createAmmoGolfBall(rotation = { x: 0, y: 0, z: 0 }, position = {
 		g_ammoPhysicsWorld.addRigidBody(rigidBody);
 
 		golfBall.collisionResponse = (mesh1) => {
-			let velocityVector = new Ammo.btVector3(0, 2, -20);
+			let velocityVector = new Ammo.btVector3(0, startingForceY, startingForceZ);
 			rigidBody.setLinearVelocity(velocityVector);
 		};
 

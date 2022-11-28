@@ -1,3 +1,8 @@
+/*
+Denne koden er basert på kodeeksempel ammoConstraints/ammoConstraints.js
+https://source.coderefinery.org/3d/threejs_std/-/blob/main/src/del4/ammoConstraints/ammoConstraints.js
+*/
+
 import "../style.css";
 import * as THREE from "three";
 

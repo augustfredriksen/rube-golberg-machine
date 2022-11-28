@@ -5,6 +5,7 @@ import  {RGBELoader}  from "three/examples/jsm/loaders/RGBELoader"
 export async function createMaterials(color = "#CFCAE6") {
     const textureLoader = new THREE.TextureLoader();
 
+    // cubemap for loop inspirert av kodeeksempel fra "cubemap" av Werner Farstad
     const imagePrefix = "assets/cubemaps/";
     const directions = ["px", "nx", "py", "ny", "pz", "nz"];
     const imageSuffix = ".png";

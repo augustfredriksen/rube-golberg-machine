@@ -9,13 +9,12 @@ export function initializeBoing() {
 	const sound = new THREE.Audio(listener);
 	const loader = new THREE.AudioLoader();
 	loader.load('assets/sounds/Boing.mp3', (buffer) => {
-        sound.duration = 30;
+        sound.duration = 20;
 		sound.setBuffer(buffer);
 		sound.setVolume(.5);
 		sound.play();
 	})
 	}
-
 }
 
 export function intializeDomino() {
@@ -31,7 +30,6 @@ export function intializeDomino() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeGolfSwing() {
@@ -47,7 +45,6 @@ export function intializeGolfSwing() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeBing() {
@@ -63,7 +60,6 @@ export function intializeBing() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeButton() {
@@ -79,7 +75,6 @@ export function intializeButton() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeDrop() {
@@ -95,7 +90,6 @@ export function intializeDrop() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeSpringBoard() {
@@ -111,7 +105,6 @@ export function intializeSpringBoard() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeSwingBall() {
@@ -127,7 +120,6 @@ export function intializeSwingBall() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeCar() {
@@ -142,7 +134,6 @@ export function intializeCar() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeSwingDoor() {
@@ -157,7 +148,6 @@ export function intializeSwingDoor() {
 			sound.play();
 		})
 	}
-
 }
 
 export function intializeBrick() {
@@ -172,5 +162,4 @@ export function intializeBrick() {
 			sound.play();
 		})
 	}
-
 }

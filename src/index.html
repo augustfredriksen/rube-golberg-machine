@@ -1,57 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prosjektoppgave</title>
-</head>
-<script src="script.js"></script>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Prosjektoppgave</title>
+	</head>
+	<script src="script.js"></script>
 
+	<body>
+		<!--<script src="../static/lib/ammo/ammo.js"></script> -->
 
-<body>
+		<!--Shader fra kodeeksempel rawShaderMaterial -->
 
+		<script type="x-shader/x-vertex" id="vertexshader">
+			precision mediump float;
 
-<script src="../static/lib/ammo/ammo.js"></script>
+			attribute vec3 position;
+			attribute vec4 color;
+			attribute float aRandomValue;
 
-<script type="x-shader/x-vertex" id="vertexshader">
-    precision mediump float;
+			//Merk: Disse sendes inn automatisk.
+			uniform mat4 modelViewMatrix;
+			uniform mat4 projectionMatrix;
 
-    attribute vec3 position;
-    attribute vec4 color;
-    attribute float aRandomValue;
+			varying vec4 vColor;
+			varying float vRandomValue;
+			void main() {
+			    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			    vColor = color;
+			    vRandomValue = aRandomValue;
+			}
+		</script>
 
-    //Merk: Disse sendes inn automatisk.
-    uniform mat4 modelViewMatrix;
-    uniform mat4 projectionMatrix;
-
-    varying vec4 vColor;
-    varying float vRandomValue;
-    void main() {
-        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-        vColor = color;
-        vRandomValue = aRandomValue;
-    }
-</script>
-
-<script type="x-shader/x-fragment" id="fragmentshader">
-    precision mediump float;
-    varying lowp vec4 vColor;
-    varying float vRandomValue;
-    void main()
-    {
-        gl_FragColor = vColor * vRandomValue;
-    }
-</script>
-<div class="flex" id="startScreen">
-    <h1>Rube Goldberg-Maskin laget ved hjelp av Three.js og Ammo.js</h1>
-    <p>Made by August Fredriksen</p>
-    <button class="button-24" id="startBtn">Start Scene</button>
-    <div class="button-24">
-        <label for="soundCheck">Sound</label>
-        <input type="checkbox" id="soundCheck" value="true">
-    </div>
-
-</div>
-
-</body>
+		<script type="x-shader/x-fragment" id="fragmentshader">
+			precision mediump float;
+			varying lowp vec4 vColor;
+			varying float vRandomValue;
+			void main()
+			{
+			    gl_FragColor = vColor * vRandomValue;
+			}
+		</script>
+		<div class="flex" id="startScreen">
+			<h1>Rube Goldberg-Maskin laget ved hjelp av Three.js og Ammo.js</h1>
+			<p>Made by August Fredriksen</p>
+			<button class="button-24" id="startBtn">Start Scene</button>
+			<div class="button-24">
+				<label for="soundCheck">Sound</label>
+				<input type="checkbox" id="soundCheck" value="true" />
+			</div>
+            <div class="flex2">
+                <h2>Play around with the starting Force of the golf ball</h2>
+                <div>
+                    <label for="forceValueZ">Enter a starting force: Z (Default 20)</label>
+                    <input type="text" name="forceZ" id="forceValueZ" value="20"/>
+                </div>
+                <div>
+                    <label for="forceValueY">Enter a starting force: Y (Default 2)</label>
+                    <input type="text" name="forceY" id="forceValueY" value="2"/>
+                </div>
+                
+            </div>
+		</div>
+	</body>
 </html>

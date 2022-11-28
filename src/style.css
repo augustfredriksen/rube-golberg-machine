@@ -105,6 +105,12 @@ input, label {
     align-items: center;
     justify-content: center;
 }
+.flex2 {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* CSS */
 .button-24 {
